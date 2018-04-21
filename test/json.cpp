@@ -1,5 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
+
 #include "../db/json.hpp"
 
 TEST_CASE( "JSON Test" ) {
