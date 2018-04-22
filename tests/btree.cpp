@@ -6,5 +6,5 @@
 TEST_CASE( "B-Tree Test" ) {
 	BTree tree;
 
-	REQUIRE( tree.getData() == 1 );
+	REQUIRE( tree.getData() == 0 );
 }

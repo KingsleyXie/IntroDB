@@ -1,8 +1,8 @@
 class BTree
 {
 public:
-	BTree();
-	~BTree();
+	BTree() {}
+	~BTree() {}
 
 	int getData()
 	{

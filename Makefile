@@ -1,10 +1,11 @@
 # Test Environment: gcc version 5.2.1, Windows 10
+C = g++ -O2 -Wall -std=c++11
 
-demo-test: test/catch.hpp test/demo.cpp
-	@g++ -std=c++11 -o test/demo test/demo.cpp && ./test/demo
+demo-test: tests/catch.hpp tests/demo.cpp
+	@$(C) -o tests/demo tests/demo.cpp && ./tests/demo
 
-json-test: test/catch.hpp test/json.cpp db/json.hpp
-	@g++ -std=c++11 -o test/json test/json.cpp && ./test/json
+json-test: tests/catch.hpp tests/json.cpp db/json.hpp
+	@$(C) -o tests/json tests/json.cpp && ./tests/json
 
-btree-test: test/catch.hpp test/btree.cpp db/json.hpp db/btree.hpp
-	@g++ -std=c++11 -o test/btree test/btree.cpp && ./test/btree
+btree-test: tests/catch.hpp tests/btree.cpp db/json.hpp db/btree.hpp
+	@$(C) -o tests/btree db/btree.hpp tests/btree.cpp && ./tests/btree
