@@ -1,13 +1,24 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
-#include "tests/kvnode.hpp"
-
 #include "../db/json.hpp"
 using nlohmann::json;
 
-TEST_CASE( "KVNode Operator Test" ) {
-	KVNode<int, int> nd;
+#include "../db/kvnode.hpp"
 
-	REQUIRE( Factorial(1) == 1 );
+TEST_CASE( "KVNode Operator Test" ) {
+	json data;
+	data["foo"] = "bar";
+	KVNode nd1(1, data);
+	KVNode nd2(2, data);
+
+	data["foo"] = "br";
+	KVNode nd3(3, data);
+	KVNode nd4(1, data);
+
+	KVNode nd5(5, data);
+
+	REQUIRE( nd1 < nd2 );
+	REQUIRE( nd3 >= nd4 );
+	REQUIRE( nd1 == nd4 );
 }

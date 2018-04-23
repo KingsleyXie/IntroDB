@@ -1,25 +1,30 @@
-template <typename K, typename V>
 class KVNode
 {
 public:
-	K key;
-	V value;
+	int key;
+	json value;
 
-	KVNode() {}
+	KVNode(int key, json value)
+	{
+		this->key = key;
+		this->value = value;
+	}
+
 	~KVNode() {}
 
+	// The comparision here only cares about "key"
 	friend bool operator<(const KVNode& l, const KVNode& r)
 	{
-		return std::tie(l.key, l.value) < std::tie(l.key, l.value);
+		return l.key < r.key;
 	}
 
 	friend bool operator==(const KVNode& l, const KVNode& r)
 	{
-		return std::tie(l.key, l.value) == std::tie(l.key, l.value);
+		return l.key == r.key;
 	}
 
 	friend bool operator>(const KVNode& l, const KVNode& r) { return r < l; }
-	friend bool operator>=(const KVNode& l, const KVNode& r) { return !(l > r); }
-	friend bool operator<=(const KVNode& l, const KVNode& r) { return !(l < r); }
-	friend bool operator!==(const KVNode& l, const KVNode& r) { return !(l == r); }
+	friend bool operator>=(const KVNode& l, const KVNode& r) { return !(l < r); }
+	friend bool operator<=(const KVNode& l, const KVNode& r) { return !(l > r); }
+	friend bool operator!=(const KVNode& l, const KVNode& r) { return !(l == r); }
 };

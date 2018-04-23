@@ -9,3 +9,6 @@ json-test: tests/catch.hpp tests/json.cpp db/json.hpp
 
 btree-test: tests/catch.hpp tests/btree.cpp db/json.hpp db/btree.hpp
 	@$(C) -o tests/btree db/btree.hpp tests/btree.cpp && ./tests/btree
+
+kvnode-test: tests/catch.hpp db/json.hpp tests/kvnode.cpp
+	@$(C) -o tests/kvnode tests/kvnode.cpp && ./tests/kvnode
