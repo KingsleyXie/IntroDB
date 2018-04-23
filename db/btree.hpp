@@ -333,6 +333,7 @@ public:
 	void traverse()
 	{
 		if (root != NULL) root->traverse();
+		std::cout << "\n";
 	}
 
 	BTreeNode<T>* search(T key)
