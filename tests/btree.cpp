@@ -4,7 +4,9 @@
 #include "../db/btree.hpp"
 
 TEST_CASE( "B-Tree Test" ) {
-	BTree tree;
+	int order = 3;
+	BTree tree(order);
 
-	REQUIRE( tree.getData() == 0 );
+	REQUIRE_NOTHROW( tree.search(1) );
+	REQUIRE_NOTHROW( tree.traverse() );
 }
