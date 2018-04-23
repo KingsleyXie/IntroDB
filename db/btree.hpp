@@ -93,6 +93,198 @@ public:
 		return children[i]->search(key);
 	}
 
+	int findKey(int key)
+	{
+		int index = 0;
+		while (index < keynum && keys[index] == key)
+			index++;
+		return index;
+	}
+
+	int getPred(int index)
+	{
+		BTreeNode *curr = children[index];
+		while (!curr->isLeaf)
+			curr = curr->children[curr->keynum];
+
+		return curr->keys[curr->keynum - 1];
+	}
+
+	int getSucc(int index)
+	{
+		BTreeNode *curr = children[index + 1];
+		while (!curr->isLeaf)
+			curr = curr->children[0];
+		return curr->keys[0];
+	}
+
+	void fill(int index)
+	{
+		if (index != 0
+			&& children[index - 1]->keynum >= order)
+		{
+			borrowFromPrev(index);
+		}
+		else
+		{
+			if (index != keynum
+				&& children[index + 1]->keynum >= order)
+				borrowFromNext(index);
+			else
+			{
+				if (index != keynum) merge(index);
+				else merge(index - 1);
+			}
+		}
+		return;
+	}
+
+	void borrowFromPrev(int index)
+	{
+		BTreeNode *child = children[index];
+		BTreeNode *sibling = children[index - 1];
+
+		for (int i = child->keynum - 1; i >= 0; --i)
+			child->keys[i+1] = child->keys[i];
+
+		if (!child->isLeaf)
+		{
+			for(int i = child->keynum; i >= 0; --i)
+				child->children[i + 1] = child->children[i];
+		}
+
+		child->keys[0] = keys[index - 1];
+
+		if (!isLeaf)
+		{
+			child->children[0] = sibling->children[sibling->keynum];
+		}
+
+		keys[index - 1] = sibling->keys[sibling->keynum - 1];
+
+		child->keynum++;
+		sibling->keynum--;
+		return;
+	}
+
+	void borrowFromNext(int index)
+	{
+		BTreeNode *child = children[index];
+		BTreeNode *sibling = children[index + 1];
+
+		child->keys[(child->keynum)] = keys[index];
+		if (!child->isLeaf)
+		{
+			child->children[(child->keynum) + 1] = sibling->children[0];
+		}
+
+		keys[index] = sibling->keys[0];
+
+		for (int i = 1; i < sibling->keynum; ++i)
+			sibling->keys[i - 1] = sibling->keys[i];
+
+		if (!sibling->isLeaf)
+		{
+			for(int i = 1; i <= sibling->keynum; ++i)
+				sibling->children[i - 1] = sibling->children[i];
+		}
+
+		child->keynum++;
+		sibling->keynum--;
+		return;
+	}
+
+	void merge(int index)
+	{
+		BTreeNode *child = children[index];
+		BTreeNode *sibling = children[index + 1];
+
+		child->keys[order - 1] = keys[index];
+
+		for (int i = 0; i < sibling->keynum; ++i)
+			child->keys[i + order] = sibling->keys[i];
+
+		if (!child->isLeaf)
+		{
+			for(int i = 0; i <= sibling->keynum; ++i)
+				child->children[i + order] = sibling->children[i];
+		}
+
+		for (int i = index + 1; i < keynum; ++i)
+			keys[i - 1] = keys[i];
+
+		for (int i = index + 2; i <= keynum; ++i)
+			children[i - 1] = children[i];
+
+		child->keynum += sibling->keynum + 1;
+		keynum--;
+
+		delete sibling;
+		return;
+	}
+
+	void remove(int key)
+	{
+		int index = findKey(key);
+
+		if (index < keynum && keys[index] == key)
+		{
+			if (isLeaf) removeFromLeaf(index);
+			else removeFromNonLeaf(index);
+		}
+		else
+		{
+			if (isLeaf)
+			{
+				throw "Provided key is not in the tree\n";
+			}
+
+			bool flag = (index == keynum);
+
+			if (children[index]->keynum < order)
+				fill(index);
+
+			if (flag && index > keynum)
+				children[index - 1]->remove(key);
+			else
+				children[index]->remove(key);
+		}
+		return;
+	}
+
+	void removeFromLeaf(int index)
+	{
+		for (int i = index + 1; i < keynum; ++i)
+			keys[i-1] = keys[i];
+		keynum--;
+		return;
+	}
+
+	void removeFromNonLeaf(int index)
+	{
+		int key = keys[index];
+		if (children[index]->keynum >= order)
+		{
+			int pre = getPred(index);
+			keys[index] = pre;
+			children[index]->remove(pre);
+		}
+		else
+		{
+			if  (children[index + 1]->keynum >= order)
+			{
+				int succ = getSucc(index);
+				keys[index] = succ;
+				children[index + 1]->remove(succ);
+			}
+			else
+			{
+				merge(index);
+				children[index]->remove(key);
+			}
+		}
+	}
+
 friend class BTree;
 };
 
