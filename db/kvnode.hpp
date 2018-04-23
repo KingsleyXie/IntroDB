@@ -4,7 +4,9 @@ public:
 	int key;
 	json value;
 
-	KVNode(int key, json value)
+	KVNode() {}
+
+	KVNode(int key, json value =NULL)
 	{
 		this->key = key;
 		this->value = value;

@@ -263,7 +263,7 @@ public:
 
 	void removeFromNonLeaf(int index)
 	{
-		int key = keys[index];
+		T key = keys[index];
 		if (children[index]->keynum >= order)
 		{
 			T pre = getPred(index);

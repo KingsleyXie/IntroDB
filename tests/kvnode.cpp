@@ -40,20 +40,24 @@ TEST_CASE( "KVNode B-Tree Test" )
 	SECTION( "Operation Test" )
 	{
 		json data;
-		data["foo"] = "bar";
 
-		REQUIRE_NOTHROW( kvt.insert(1, data) );
-		REQUIRE_NOTHROW( kvt.traverse() );
+		data["foo"] = "bar";
+		KVNode nd1(1, data);
+		REQUIRE_NOTHROW( kvt.insert(nd1) );
+		// REQUIRE_NOTHROW( kvt.traverse() );
 
 		data["test"] = "test";
-		REQUIRE_NOTHROW( kvt.insert(2, data) );
-		REQUIRE_NOTHROW( kvt.traverse() );
+		KVNode nd2(2, data);
+		REQUIRE_NOTHROW( kvt.insert(nd2) );
+		// REQUIRE_NOTHROW( kvt.traverse() );
 
-		REQUIRE_NOTHROW( kvt.remove(1) );
-		REQUIRE_NOTHROW( kvt.traverse() );
+		KVNode nd3(1);
+		REQUIRE_NOTHROW( kvt.remove(nd3) );
+		// REQUIRE_NOTHROW( kvt.traverse() );
 
+		nd3.key = 233;
 		REQUIRE_THROWS_WITH(
-			kvt.remove(233),
+			kvt.remove(nd3),
 			"Provided key is not in the tree!\n"
 		);
 	}
