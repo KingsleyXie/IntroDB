@@ -20,6 +20,66 @@ public:
 
 	~BTreeNode() {}
 
+	void insertNonFull(int key)
+	{
+		int i = keynum - 1;
+		if (isLeaf)
+		{
+			while(i >= 0 && keys[i] > key)
+			{
+				keys[i + 1] = keys[i];
+				i--;
+			}
+
+			keys[i + 1] = key;
+			keynum++;
+			if (key == 30)
+			{
+				for (int i = 0; i < keynum; ++i)
+				{
+					std::cout << keys[i] << "\t";
+				}
+			}
+		}
+		else
+		{
+			while(i >= 0 && keys[i] > key) i--;
+			if (children[i + 1]->keynum == 2 * order - 1)
+			{
+				splitChild(i + 1, children[i + 1]);
+				if (keys[i + 1] < key) i++;
+			}
+			children[i + 1]->insertNonFull(key);
+		}
+	}
+
+	void splitChild(int pos, BTreeNode *child)
+	{
+		BTreeNode *sibling = new BTreeNode(child->order, child->isLeaf);
+		sibling->keynum = order - 1;
+
+		for (int i = 0; i < order - 1; ++i)
+			sibling->keys[i] = child->keys[i + order];
+
+		if (!child->isLeaf)
+		{
+			for (int i = 0; i < order; ++i)
+				sibling->children[i] = child->children[i + order];
+		}
+
+		child->keynum = order - 1;
+
+		for (int i = keynum; i >= pos + 1; i--)
+			children[i + 1] = children[i];
+		children[pos + 1] = sibling;
+
+		for (int i = keynum - 1; i >= pos; i--)
+			keys[i + 1] = keys[i];
+
+		keys[pos] = sibling->keys[order - 1];
+		keynum++;
+	}
+
 	void traverse()
 	{
 		for (int i = 0; i < keynum; ++i)
@@ -57,6 +117,33 @@ public:
 	}
 
 	~BTree() {}
+
+	void insert(int key)
+	{
+		if (root == NULL)
+		{
+			root = new BTreeNode(order, true);
+			root->keys[0] = key;
+			root->keynum = 1;
+		}
+		else
+		{
+			if (root->keynum == 2 * order - 1)
+			{
+				BTreeNode *node = new BTreeNode(order, false);
+				node->children[0] = root;
+				node->splitChild(0,  root);
+
+				int i = 0;
+				if (node->keys[0] < key) i++;
+				node->children[i]->insertNonFull(key);
+
+				root = node;
+			}
+			else
+				root->insertNonFull(key);
+		}
+	}
 
 	void traverse()
 	{
