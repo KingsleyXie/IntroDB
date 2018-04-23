@@ -1,26 +1,27 @@
 #include <bits/stdc++.h>
 
+template <typename T>
 class BTreeNode
 {
-private:
-	BTreeNode **children;
-	int *keys, order, keynum;
+public:
+	BTreeNode<T> **children;
+	T *keys;
+	int order, keynum;
 	bool isLeaf;
 
-public:
 	BTreeNode(int order, bool isLeaf)
 	{
 		this->order = order;
 		this->isLeaf = isLeaf;
 
-		children = new BTreeNode *[2 * order];
-		keys = new int[2 * order - 1];
+		children = new BTreeNode<T> *[2 * order];
+		keys = new T[2 * order - 1];
 		keynum = 0;
 	}
 
 	~BTreeNode() {}
 
-	void insertNonFull(int key)
+	void insertNonFull(T key)
 	{
 		int i = keynum - 1;
 		if (isLeaf)
@@ -46,9 +47,9 @@ public:
 		}
 	}
 
-	void splitChild(int pos, BTreeNode *child)
+	void splitChild(int pos, BTreeNode<T> *child)
 	{
-		BTreeNode *sibling = new BTreeNode(child->order, child->isLeaf);
+		BTreeNode<T> *sibling = new BTreeNode<T>(child->order, child->isLeaf);
 		sibling->keynum = order - 1;
 
 		for (int i = 0; i < order - 1; ++i)
@@ -84,7 +85,7 @@ public:
 		if (!isLeaf) children[keynum]->traverse();
 	}
 
-	BTreeNode* search(int key)
+	BTreeNode<T>* search(T key)
 	{
 		int i = 0;
 		while(i < keynum && key > keys[i]) i++;
@@ -93,7 +94,7 @@ public:
 		return children[i]->search(key);
 	}
 
-	int findKey(int key)
+	int findKey(T key)
 	{
 		int index = 0;
 		while (index < keynum && keys[index] < key)
@@ -101,18 +102,18 @@ public:
 		return index;
 	}
 
-	int getPred(int index)
+	T getPred(int index)
 	{
-		BTreeNode *curr = children[index];
+		BTreeNode<T> *curr = children[index];
 		while (!curr->isLeaf)
 			curr = curr->children[curr->keynum];
 
 		return curr->keys[curr->keynum - 1];
 	}
 
-	int getSucc(int index)
+	T getSucc(int index)
 	{
-		BTreeNode *curr = children[index + 1];
+		BTreeNode<T> *curr = children[index + 1];
 		while (!curr->isLeaf)
 			curr = curr->children[0];
 		return curr->keys[0];
@@ -141,8 +142,8 @@ public:
 
 	void borrowFromPrev(int index)
 	{
-		BTreeNode *child = children[index];
-		BTreeNode *sibling = children[index - 1];
+		BTreeNode<T> *child = children[index];
+		BTreeNode<T> *sibling = children[index - 1];
 
 		for (int i = child->keynum - 1; i >= 0; --i)
 			child->keys[i+1] = child->keys[i];
@@ -169,8 +170,8 @@ public:
 
 	void borrowFromNext(int index)
 	{
-		BTreeNode *child = children[index];
-		BTreeNode *sibling = children[index + 1];
+		BTreeNode<T> *child = children[index];
+		BTreeNode<T> *sibling = children[index + 1];
 
 		child->keys[(child->keynum)] = keys[index];
 		if (!child->isLeaf)
@@ -196,8 +197,8 @@ public:
 
 	void merge(int index)
 	{
-		BTreeNode *child = children[index];
-		BTreeNode *sibling = children[index + 1];
+		BTreeNode<T> *child = children[index];
+		BTreeNode<T> *sibling = children[index + 1];
 
 		child->keys[order - 1] = keys[index];
 
@@ -223,7 +224,7 @@ public:
 		return;
 	}
 
-	void remove(int key)
+	void remove(T key)
 	{
 		int index = findKey(key);
 
@@ -255,7 +256,7 @@ public:
 	void removeFromLeaf(int index)
 	{
 		for (int i = index + 1; i < keynum; ++i)
-			keys[i-1] = keys[i];
+			keys[i - 1] = keys[i];
 		keynum--;
 		return;
 	}
@@ -265,7 +266,7 @@ public:
 		int key = keys[index];
 		if (children[index]->keynum >= order)
 		{
-			int pre = getPred(index);
+			T pre = getPred(index);
 			keys[index] = pre;
 			children[index]->remove(pre);
 		}
@@ -273,7 +274,7 @@ public:
 		{
 			if  (children[index + 1]->keynum >= order)
 			{
-				int succ = getSucc(index);
+				T succ = getSucc(index);
 				keys[index] = succ;
 				children[index + 1]->remove(succ);
 			}
@@ -284,14 +285,13 @@ public:
 			}
 		}
 	}
-
-friend class BTree;
 };
 
+template <typename T>
 class BTree
 {
 private:
-	BTreeNode *root;
+	BTreeNode<T> *root;
 	int order;
 
 public:
@@ -303,11 +303,11 @@ public:
 
 	~BTree() {}
 
-	void insert(int key)
+	void insert(T key)
 	{
 		if (root == NULL)
 		{
-			root = new BTreeNode(order, true);
+			root = new BTreeNode<T>(order, true);
 			root->keys[0] = key;
 			root->keynum = 1;
 		}
@@ -315,7 +315,7 @@ public:
 		{
 			if (root->keynum == 2 * order - 1)
 			{
-				BTreeNode *node = new BTreeNode(order, false);
+				BTreeNode<T> *node = new BTreeNode<T>(order, false);
 				node->children[0] = root;
 				node->splitChild(0,  root);
 
@@ -335,19 +335,19 @@ public:
 		if (root != NULL) root->traverse();
 	}
 
-	BTreeNode* search(int key)
+	BTreeNode<T>* search(T key)
 	{
 		return root == NULL ? NULL : root->search(key);
 	}
 
-	void remove(int key)
+	void remove(T key)
 	{
 		if (!root) throw "The tree is empty!\n";
 		root->remove(key);
 
 		if (root->keynum == 0)
 		{
-			BTreeNode *t = root;
+			BTreeNode<T> *t = root;
 
 			if (root->isLeaf) root = NULL;
 			else root = root->children[0];
