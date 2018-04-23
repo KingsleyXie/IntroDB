@@ -85,6 +85,17 @@ public:
 		if (!isLeaf) children[keynum]->traverse();
 	}
 
+	void dump(std::ostream& stream)
+	{
+		for (int i = 0; i < keynum; ++i)
+		{
+			if (!isLeaf) children[i]->dump(stream);
+			keys[i].archive(stream);
+		}
+
+		if (!isLeaf) children[keynum]->dump(stream);
+	}
+
 	BTreeNode<T>* search(T key)
 	{
 		int i = 0;
@@ -334,6 +345,16 @@ public:
 	{
 		if (root != NULL) root->traverse();
 		std::cout << "\n";
+	}
+
+	void dump(std::ostream& stream)
+	{
+		stream << "[";
+
+		if (root != NULL) root->dump(stream);
+
+		stream.seekp(-1, std::ios_base::end);
+		stream << "]";
 	}
 
 	BTreeNode<T>* search(T key)

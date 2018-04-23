@@ -14,10 +14,19 @@ public:
 
 	~KVNode() {}
 
+	void archive(std::ostream& stream)
+	{
+		json data;
+		data["key"] = key; data["value"] = value;
+
+		stream << data << ",";
+		return;
+	}
+
 	friend std::ostream& operator<<(std::ostream& stream, const KVNode& nd)
 	{
-		std::cout << "\nKey: " << nd.key;
-		std::cout << "\tValue: " << nd.value;
+		stream << "\nKey: " << nd.key;
+		stream << "\tValue: " << nd.value;
 	}
 
 	// The comparision of this class only cares about "key"
