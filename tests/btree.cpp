@@ -125,4 +125,14 @@ TEST_CASE( "JSON B-Tree Test" )
 			"Provided key is not in the tree!\n"
 		);
 	}
+
+	SECTION( "File IO Test [Deprecated]" )
+	{
+		data["foo"] = "bar";
+
+		std::fstream file;
+		REQUIRE_NOTHROW( file.open("./data.json", std::ios::out) );
+		REQUIRE_NOTHROW( file.write((char*)&json_tree, sizeof(json_tree)) );
+		REQUIRE_NOTHROW( file.close() );
+	}
 }
