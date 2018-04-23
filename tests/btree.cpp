@@ -3,6 +3,9 @@
 
 #include "../db/btree.hpp"
 
+#include "../db/json.hpp"
+using nlohmann::json;
+
 int order = 3;
 
 TEST_CASE( "Int B-Tree Test" )
@@ -87,6 +90,38 @@ TEST_CASE( "Float B-Tree Test" )
 
 		REQUIRE_THROWS_WITH(
 			float_tree.remove(10.2),
+			"Provided key is not in the tree!\n"
+		);
+	}
+}
+
+TEST_CASE( "JSON B-Tree Test" )
+{
+	BTree<json> json_tree(order);
+
+	json data;
+	data["foo"] = "bar";
+
+	SECTION( "Empty Tree Test" )
+	{
+		REQUIRE_THROWS_WITH(
+			json_tree.remove(data),
+			"The tree is empty!\n"
+		);
+	}
+
+	SECTION( "Operation Test" )
+	{
+		REQUIRE_NOTHROW( json_tree.insert(data) );
+		data["test"] = "emmm"; REQUIRE_NOTHROW( json_tree.insert(data) );
+		data["emmm"] = "test"; REQUIRE_NOTHROW( json_tree.insert(data) );
+
+		REQUIRE_NOTHROW( json_tree.traverse() );
+		REQUIRE_NOTHROW( json_tree.remove(data) );
+		REQUIRE_NOTHROW( json_tree.traverse() );
+
+		REQUIRE_THROWS_WITH(
+			json_tree.remove(data),
 			"Provided key is not in the tree!\n"
 		);
 	}
