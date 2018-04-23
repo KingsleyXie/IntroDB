@@ -12,19 +12,35 @@ public:
 
 	~KVNode() {}
 
-	// The comparision here only cares about "key"
+	// The comparision of this class only cares about "key"
+
 	friend bool operator<(const KVNode& l, const KVNode& r)
 	{
 		return l.key < r.key;
 	}
+
+	friend bool operator>(const KVNode& l, const KVNode& r)
+	{
+		return r < l;
+	}
+	friend bool operator>=(const KVNode& l, const KVNode& r)
+	{
+		return !(l < r);
+	}
+	friend bool operator<=(const KVNode& l, const KVNode& r)
+	{
+		return !(l > r);
+	}
+
+
 
 	friend bool operator==(const KVNode& l, const KVNode& r)
 	{
 		return l.key == r.key;
 	}
 
-	friend bool operator>(const KVNode& l, const KVNode& r) { return r < l; }
-	friend bool operator>=(const KVNode& l, const KVNode& r) { return !(l < r); }
-	friend bool operator<=(const KVNode& l, const KVNode& r) { return !(l > r); }
-	friend bool operator!=(const KVNode& l, const KVNode& r) { return !(l == r); }
+	friend bool operator!=(const KVNode& l, const KVNode& r)
+	{
+		return !(l == r);
+	}
 };

@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 #include "../db/json.hpp"
-using nlohmann::json;
+using json = nlohmann::json;
 
 #include "../db/kvnode.hpp"
 
