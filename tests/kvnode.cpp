@@ -44,16 +44,22 @@ TEST_CASE( "KVNode B-Tree Test" )
 		data["foo"] = "bar";
 		KVNode nd1(1, data);
 		REQUIRE_NOTHROW( kvt.insert(nd1) );
-		// REQUIRE_NOTHROW( kvt.traverse() );
+		REQUIRE_NOTHROW( kvt.traverse() );
 
 		data["test"] = "test";
 		KVNode nd2(2, data);
 		REQUIRE_NOTHROW( kvt.insert(nd2) );
-		// REQUIRE_NOTHROW( kvt.traverse() );
+
+		nd2.value["emmm"] = "emmm";
+		nd2.key = 3; REQUIRE_NOTHROW( kvt.insert(nd2) );
+		nd2.key = 4; REQUIRE_NOTHROW( kvt.insert(nd2) );
+		nd2.key = 5; REQUIRE_NOTHROW( kvt.insert(nd2) );
+
+		REQUIRE_NOTHROW( kvt.traverse() );
 
 		KVNode nd3(1);
 		REQUIRE_NOTHROW( kvt.remove(nd3) );
-		// REQUIRE_NOTHROW( kvt.traverse() );
+		REQUIRE_NOTHROW( kvt.traverse() );
 
 		nd3.key = 233;
 		REQUIRE_THROWS_WITH(
