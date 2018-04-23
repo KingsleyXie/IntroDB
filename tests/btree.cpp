@@ -17,7 +17,7 @@ TEST_CASE( "Int B-Tree Test" )
 		);
 	}
 
-	SECTION( "Insert Operation Test" )
+	SECTION( "Operation Test" )
 	{
 		REQUIRE_NOTHROW( int_tree.insert(10) );
 		REQUIRE_NOTHROW( int_tree.insert(6) );
@@ -34,10 +34,7 @@ TEST_CASE( "Int B-Tree Test" )
 		REQUIRE_NOTHROW( int_tree.insert(6) );
 
 		REQUIRE_NOTHROW( int_tree.traverse() );
-	}
 
-	SECTION( "Remove Operation Test" )
-	{
 		REQUIRE_NOTHROW( int_tree.remove(9) );
 		REQUIRE_NOTHROW( int_tree.traverse() );
 
@@ -66,7 +63,7 @@ TEST_CASE( "Float B-Tree Test" )
 		);
 	}
 
-	SECTION( "Insert Operation Test" )
+	SECTION( "Operation Test" )
 	{
 		REQUIRE_NOTHROW( float_tree.insert(52.6) );
 		REQUIRE_NOTHROW( float_tree.insert(12.3) );
@@ -81,10 +78,7 @@ TEST_CASE( "Float B-Tree Test" )
 		REQUIRE_NOTHROW( float_tree.insert(5464511) );
 
 		REQUIRE_NOTHROW( float_tree.traverse() );
-	}
 
-	SECTION( "Remove Operation Test" )
-	{
 		REQUIRE_NOTHROW( float_tree.remove(2.3) );
 		REQUIRE_NOTHROW( float_tree.traverse() );
 
