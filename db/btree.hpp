@@ -33,13 +33,6 @@ public:
 
 			keys[i + 1] = key;
 			keynum++;
-			if (key == 30)
-			{
-				for (int i = 0; i < keynum; ++i)
-				{
-					std::cout << keys[i] << "\t";
-				}
-			}
 		}
 		else
 		{
@@ -76,7 +69,7 @@ public:
 		for (int i = keynum - 1; i >= pos; i--)
 			keys[i + 1] = keys[i];
 
-		keys[pos] = sibling->keys[order - 1];
+		keys[pos] = child->keys[order - 1];
 		keynum++;
 	}
 
