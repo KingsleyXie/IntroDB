@@ -7,6 +7,8 @@ TEST_CASE( "B-Tree Test" ) {
 	int order = 3;
 	BTree tree(order);
 
+	REQUIRE_THROWS_WITH( tree.remove(1), "The tree is empty!\n" );
+
 	tree.insert(10);
 	tree.insert(6);
 	tree.insert(11);
@@ -18,7 +20,16 @@ TEST_CASE( "B-Tree Test" ) {
 	tree.insert(12);
 	tree.insert(215);
 	tree.insert(6);
-	tree.insert(7);
+	tree.traverse();
+	std::cout << "\n";
+	tree.remove(9);
+	tree.traverse();
+	std::cout << "\n";
+	tree.remove(6);
+	tree.traverse();
+	std::cout << "\n";
+	tree.remove(10);
 
 	REQUIRE_NOTHROW( tree.traverse() );
+	REQUIRE_THROWS_WITH( tree.remove(233), "Provided key is not in the tree!\n" );
 }

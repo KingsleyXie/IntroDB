@@ -96,7 +96,7 @@ public:
 	int findKey(int key)
 	{
 		int index = 0;
-		while (index < keynum && keys[index] == key)
+		while (index < keynum && keys[index] < key)
 			index++;
 		return index;
 	}
@@ -236,7 +236,7 @@ public:
 		{
 			if (isLeaf)
 			{
-				throw "Provided key is not in the tree\n";
+				throw "Provided key is not in the tree!\n";
 			}
 
 			bool flag = (index == keynum);
@@ -338,5 +338,22 @@ public:
 	BTreeNode* search(int key)
 	{
 		return root == NULL ? NULL : root->search(key);
+	}
+
+	void remove(int key)
+	{
+		if (!root) throw "The tree is empty!\n";
+		root->remove(key);
+
+		if (root->keynum == 0)
+		{
+			BTreeNode *t = root;
+
+			if (root->isLeaf) root = NULL;
+			else root = root->children[0];
+
+			delete t;
+		}
+		return;
 	}
 };
