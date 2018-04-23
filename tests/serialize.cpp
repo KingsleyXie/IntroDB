@@ -31,5 +31,36 @@ TEST_CASE( "KVNode B-Tree Serialize Test" )
 		std::fstream file;
 		REQUIRE_NOTHROW( file.open("data.json", std::ios::out) );
 		REQUIRE_NOTHROW( kvt.dump(file) );
+		REQUIRE_NOTHROW( file.close() );
+	}
+
+	SECTION( "Restore Test" )
+	{
+		std::fstream file;
+		REQUIRE_NOTHROW( file.open("data.json", std::ios::in) );
+
+		REQUIRE_NOTHROW( kvt.restore(file) );
+		REQUIRE_NOTHROW( kvt.traverse() );
+		REQUIRE_NOTHROW( file.close() );
+	}
+
+	SECTION( "Initial Restore Test" )
+	{
+		std::fstream file;
+		REQUIRE_NOTHROW( file.open("data.json", std::ios::in) );
+
+		json data;
+		REQUIRE_NOTHROW(file >> data);
+
+		for (int i = 0; i < data.size(); ++i)
+		{
+			json row = data[i];
+			KVNode nd(row["key"], row["value"]);
+			REQUIRE_NOTHROW( kvt.insert(nd) );
+		}
+
+		REQUIRE_NOTHROW( kvt.traverse() );
+
+		REQUIRE_NOTHROW( file.close() );
 	}
 }

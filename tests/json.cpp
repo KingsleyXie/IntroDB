@@ -2,9 +2,10 @@
 #include "catch.hpp"
 
 #include "../db/json.hpp"
+using json = nlohmann::json;
 
 TEST_CASE( "JSON Test" ) {
-	nlohmann::json data;
+	json data;
 
 	data["foo"] = "bar";
 

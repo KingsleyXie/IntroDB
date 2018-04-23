@@ -1,10 +1,10 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
-#include "../db/btree.hpp"
-
 #include "../db/json.hpp"
 using json = nlohmann::json;
+
+#include "../db/btree.hpp"
 
 int order = 3;
 

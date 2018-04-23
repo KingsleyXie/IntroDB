@@ -347,6 +347,8 @@ public:
 		std::cout << "\n";
 	}
 
+	// Note: "dump" and "restore" functions are
+	// specially wrote for B-Trees of "KVNode" Type
 	void dump(std::ostream& stream)
 	{
 		stream << "[";
@@ -355,6 +357,19 @@ public:
 
 		stream.seekp(-1, std::ios_base::end);
 		stream << "]";
+	}
+
+	void restore(std::istream& stream)
+	{
+		json data;
+		stream >> data;
+
+		for (int i = 0; i < data.size(); ++i)
+		{
+			json row = data[i];
+			T nd(row["key"], row["value"]);
+			insert(nd);
+		}
 	}
 
 	BTreeNode<T>* search(T key)
