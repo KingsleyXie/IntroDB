@@ -17,6 +17,13 @@ public:
 
 	~Db() {}
 
+	void select(std::string name, json &result)
+	{
+		if (!checkTable(name)) throw "Table not exists!\n";
+
+		tables[name].selectAll(result);
+	}
+
 	void insert(std::string name, int id, json data)
 	{
 		if (!checkTable(name)) throw "Table not exists!\n";
