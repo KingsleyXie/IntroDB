@@ -1,5 +1,22 @@
 #include "./db/db.hpp"
 
+void init()
+{
+	const std::string db_name = "db";
+
+	Db db(db_name);
+
+	db.addTable("staffs");
+	db.addTable("items");
+	db.addTable("finance");
+
+	json data = json::array();
+	db.insert("staffs", data);
+	db.insert("items", data);
+
+	db.dump(db_name + ".json");
+}
+
 int main(int argc, char const *argv[])
 {
 	if (argc != 2)
@@ -24,7 +41,6 @@ int main(int argc, char const *argv[])
 		}
 
 		Db db(db_name);
-
 		db.restore(db_name + ".json");
 		db.traverse();
 	}
