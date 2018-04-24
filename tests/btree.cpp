@@ -84,7 +84,7 @@ TEST_CASE( "Float B-Tree Test" )
 		REQUIRE_NOTHROW( float_tree.remove(2.3) );
 		REQUIRE_NOTHROW( float_tree.traverse() );
 
-		REQUIRE_NOTHROW( float_tree.remove(97) );
+		REQUIRE_NOTHROW( float_tree.remove(351.336) );
 		REQUIRE_NOTHROW( float_tree.traverse() );
 
 		REQUIRE_THROWS_WITH(

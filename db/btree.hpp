@@ -1,5 +1,7 @@
 #include <bits/stdc++.h>
 
+#define DEFAULT_ORDER 100
+
 template <typename T>
 class BTreeNode
 {
@@ -333,7 +335,7 @@ private:
 	int order;
 
 public:
-	BTree(int order)
+	BTree(int order =DEFAULT_ORDER)
 	{
 		root = NULL;
 		this->order = order;
