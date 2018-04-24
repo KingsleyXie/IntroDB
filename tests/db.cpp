@@ -120,6 +120,8 @@ TEST_CASE( "Serialize Test" )
 		REQUIRE_NOTHROW( file.open("test.json", std::ios::out) );
 		REQUIRE_NOTHROW( db.dump(file) );
 		REQUIRE_NOTHROW( file.close() );
+
+		REQUIRE_NOTHROW( db.dump("another.json") );
 	}
 
 	SECTION( "Restore Test" )
@@ -140,5 +142,9 @@ TEST_CASE( "Serialize Test" )
 		REQUIRE_NOTHROW( db.insert("table2", data) );
 
 		REQUIRE_NOTHROW( db.traverse() );
+
+		Db another("another");
+		REQUIRE_NOTHROW( another.restore("another.json") );
+		REQUIRE_NOTHROW( another.traverse() );
 	}
 }

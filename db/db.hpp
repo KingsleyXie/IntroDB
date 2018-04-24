@@ -96,6 +96,20 @@ public:
 		std::cout << "\n";
 	}
 
+	void dump(std::string filepath)
+	{
+		std::fstream file;
+		file.open(filepath, std::ios::out);
+		dump(file); file.close();
+	}
+
+	void restore(std::string filepath)
+	{
+		std::fstream file;
+		file.open(filepath, std::ios::in);
+		restore(file); file.close();
+	}
+
 	void dump(std::ostream& stream)
 	{
 		json database; database["name"] = name;
