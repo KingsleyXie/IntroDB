@@ -22,3 +22,22 @@ kvnode-test:
 serialize-test:
 	@$(C) -o tests/serialize tests/serialize.cpp
 	@./tests/serialize
+
+
+
+run-test: run-demo-test run-json-test run-btree-test run-kvnode-test run-serialize-test
+
+run-demo-test:
+	@./tests/demo
+
+run-json-test:
+	@./tests/json
+
+run-btree-test:
+	@./tests/btree
+
+run-kvnode-test:
+	@./tests/kvnode
+
+run-serialize-test:
+	@./tests/serialize

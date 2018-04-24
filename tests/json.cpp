@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
-#include "catch.hpp"
+#include "../dependency/catch.hpp"
 
-#include "../db/json.hpp"
+#include "../dependency/json.hpp"
 using json = nlohmann::json;
 
 TEST_CASE( "JSON Test" ) {
