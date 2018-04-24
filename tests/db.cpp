@@ -86,6 +86,7 @@ TEST_CASE( "Serialize Test" )
 {
 	Db db("db");
 	json data, result;
+	std::fstream file;
 
 	SECTION( "Dump Test" )
 	{
@@ -116,7 +117,6 @@ TEST_CASE( "Serialize Test" )
 
 		REQUIRE_NOTHROW( db.traverse() );
 
-		std::fstream file;
 		REQUIRE_NOTHROW( file.open("data.json", std::ios::out) );
 		REQUIRE_NOTHROW( db.dump(file) );
 		REQUIRE_NOTHROW( file.close() );
@@ -124,11 +124,21 @@ TEST_CASE( "Serialize Test" )
 
 	SECTION( "Restore Test" )
 	{
-		std::fstream file;
 		REQUIRE_NOTHROW( file.open("data.json", std::ios::in) );
 
 		REQUIRE_NOTHROW( db.restore(file) );
 		REQUIRE_NOTHROW( db.traverse() );
 		REQUIRE_NOTHROW( file.close() );
+
+		data["foo"] = "bar";
+		REQUIRE_NOTHROW( db.insert("table1", data) );
+		REQUIRE_NOTHROW( db.insert("table2", data) );
+
+		data["excited"] = "naive";
+		REQUIRE_NOTHROW( db.insert("table1", data) );
+		REQUIRE_NOTHROW( db.insert("table2", data) );
+		REQUIRE_NOTHROW( db.insert("table2", data) );
+
+		REQUIRE_NOTHROW( db.traverse() );
 	}
 }

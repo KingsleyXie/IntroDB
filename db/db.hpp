@@ -107,7 +107,7 @@ public:
 			json table_dump;
 
 			table_dump["name"] = i->first;
-			table_dump["id"] = tables["name"].getAutoId();
+			table_dump["id"] = tables[table_dump["name"]].getAutoId();
 			i->second.selectAll(table_dump["data"]);
 
 			tables_dump.push_back(table_dump);
