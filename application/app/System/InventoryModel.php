@@ -1,9 +1,16 @@
 <?php
 
-namespace App\System;
+// namespace App\System;
 
-class Inventory
+// include 'Db.php';
+
+class InventoryModeld
 {
+	public function index()
+	{
+		echo $this->select("inventory");
+	}
+	/*
 	int display()
 	{
 		response = record["items"];
@@ -108,4 +115,6 @@ class Inventory
 		cout << response;
 		return 0;
 	}
-}
+*/}
+// $a = new InventoryModel;
+// $a->index();

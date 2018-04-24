@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 
 Route::any('/sell', 'System\SalesController@sellItem');
+Route::any('/inventory', 'System\InventoryController@index');

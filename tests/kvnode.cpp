@@ -71,7 +71,7 @@ TEST_CASE( "KVNode B-Tree Test" )
 
 		json result = json::array();
 		REQUIRE_NOTHROW( kvt.selectAll(result) );
-		REQUIRE_NOTHROW( std::cout << result );
+		REQUIRE_NOTHROW( std::cout << result << "\n" );
 
 		nd3.key = 233;
 		REQUIRE_THROWS_WITH(

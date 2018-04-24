@@ -1,1 +1,0 @@
-{"name":"db","tables":[{"data":null,"id":0,"name":"finance"},{"data":[{"key":1,"value":[]}],"id":1,"name":"items"},{"data":[{"key":1,"value":[]},{"key":2,"value":{"foo":"bar"}},{"key":3,"value":{"foo":"bar"}},{"key":4,"value":{"foo":"bar"}},{"key":5,"value":{"foo":"bar"}}],"id":5,"name":"staffs"}]}
