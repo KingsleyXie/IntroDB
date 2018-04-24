@@ -1,21 +1,86 @@
 <?php
-if (!file_exists('db/app.exe'))
-	shell_exec('g++ -std=c++11 -o db/app.exe db/app.cpp');
+class Db
+{
+	private $operation, $db_name = "db";
 
-$operation = json_encode([
-	"db_name" => "db",
-	"tb_name" => "staffs",
-	"op_type" => 0,
-	"data" => [
-		"foo" => "bar"
-	]
-]);
+	function __construct()
+	{
+		if (!file_exists('db/app.exe'))
+			shell_exec('g++ -std=c++11 -o db/app.exe db/app.cpp');
 
-$operation = str_replace('"', '\"', $operation);
-$cmd = "cd ./db && app.exe \"$operation\" 2>&1";
+		$this->operation = ["db_name" => $this->db_name];
+	}
 
-$output = shell_exec($cmd);
-echo $output;
+	private function db_execute()
+	{
+		$this->operation = str_replace('"', '\"', $this->operation);
+
+		$cmd = 'cd ./db && app.exe "' . $this->operation . '" 2>&1';
+		$result = shell_exec($cmd);
+
+		return $result;
+	}
+
+	public function getCount($table)
+	{
+		$this->operation["tb_name"] = $table;
+		$this->operation["op_type"] = 0;
+
+		return $this->db_execute();
+	}
+
+	public function select($table)
+	{
+		$this->operation["tb_name"] = $table;
+		$this->operation["op_type"] = 1;
+
+		return $this->db_execute();
+	}
+
+	public function insert($table, $data)
+	{
+		$this->operation["tb_name"] = $table;
+		$this->operation["op_type"] = 2;
+		$this->operation["data"] = $data;
+
+		return $this->db_execute();
+	}
+
+	public function update($table, $id, $data)
+	{
+		$this->operation["tb_name"] = $table;
+		$this->operation["op_type"] = 3;
+		$this->operation["id"] = $id;
+		$this->operation["data"] = $data;
+
+		return $this->db_execute();
+	}
+
+	public function remove($table)
+	{
+		$this->operation["tb_name"] = $table;
+		$this->operation["op_type"] = 4;
+		$this->operation["id"] = $id;
+
+		return $this->db_execute();
+	}
+
+	public function addTable($name)
+	{
+		$this->operation["tb_name"] = $name;
+		$this->operation["op_type"] = 5;
+
+		return $this->db_execute();
+	}
+
+	public function removeTable($name)
+	{
+		$this->operation["tb_name"] = $name;
+		$this->operation["op_type"] = 6;
+
+		return $this->db_execute();
+	}
+}
 
 
 
