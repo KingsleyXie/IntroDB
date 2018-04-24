@@ -57,6 +57,14 @@ TEST_CASE( "KVNode B-Tree Test" )
 
 		REQUIRE_NOTHROW( kvt.traverse() );
 
+		nd2.key = 3; nd2.value["update"] = true;
+		REQUIRE_NOTHROW( kvt.update(nd2) );
+		REQUIRE_NOTHROW( kvt.traverse() );
+
+		nd2.key = 5; nd2.value["update"] = true;
+		REQUIRE_NOTHROW( kvt.update(nd2) );
+		REQUIRE_NOTHROW( kvt.traverse() );
+
 		KVNode nd3(1);
 		REQUIRE_NOTHROW( kvt.remove(nd3) );
 		REQUIRE_NOTHROW( kvt.traverse() );

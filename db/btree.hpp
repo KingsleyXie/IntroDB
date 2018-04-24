@@ -105,6 +105,22 @@ public:
 		return children[i]->search(key);
 	}
 
+	void update(T key)
+	{
+		int i = 0;
+		while(i < keynum && key > keys[i]) i++;
+
+		if (keys[i] == key)
+		{
+			// Set new value
+			keys[i] = key;
+			return;
+		}
+
+		if (isLeaf) return;
+		return children[i]->update(key);
+	}
+
 	int findKey(T key)
 	{
 		int index = 0;
@@ -345,6 +361,12 @@ public:
 	{
 		if (root != NULL) root->traverse();
 		std::cout << "\n";
+	}
+
+	void update(T key)
+	{
+		if (root == NULL) throw "The tree is empty!";
+		root->update(key);
 	}
 
 	// Note: "dump" and "restore" functions are
