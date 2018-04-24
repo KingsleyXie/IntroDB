@@ -17,12 +17,28 @@ public:
 
 	~Db() {}
 
-	void addTable(std::string name)
+	void update(std::string table, json data)
+	{
+		//
+	}
+
+	bool getTable(std::string name, BTree<KVNode> &table)
 	{
 		for (std::map<std::string, BTree<KVNode> >::iterator i
 			= tables.begin(); i != tables.end(); ++i)
 			if (i->first == name)
-				throw "Table name duplicated!\n";
+			{
+				table = i->second;
+				return true;
+			}
+		return false;
+	}
+
+	void addTable(std::string name)
+	{
+		BTree<KVNode> temp;
+		if (getTable(name, temp))
+			throw "Table name duplicated!\n";
 
 		BTree<KVNode> tb;
 		tables[name] = tb;
@@ -30,8 +46,10 @@ public:
 
 	void removeTable(std::string name)
 	{
-		for (std::map<std::string, BTree<KVNode> >::iterator i
-			= tables.begin(); i != tables.end(); ++i)
-			if (i->first == name) tables.erase(name);
+		BTree<KVNode> temp;
+		if (!getTable(name, temp))
+			throw "Table not exists!\n";
+
+		tables.erase(name);
 	}
 };
