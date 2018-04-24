@@ -2,48 +2,47 @@
 
 namespace App\System;
 
-class Sales
+class SalesModel extends Db
 {
-    $rate = 1.5; // Rate from payment to points
+    private $rate = 1.5; // Rate from payment to points
 
-    int sell_item()
+    public function sellItem($cid, $iid, $time, $year, $month, $day)
     {
-        data_index = request["itemID"];
-        int inventoryQuantity = record["items"][data_index]["inventoryQuantity"];
-        record["items"][data_index]["inventoryQuantity"] = inventoryQuantity - 1;
+        $items = $this->select("items");
+        $item = $items[$iid];
 
-        record["finance"].push_back(
-        {
-            {"name", "Sell Record"},
-            {"income", record["items"][data_index]["salePrice"]},
-            {"expenditure", 0},
-            {"date", 
-                {
-                    {"year", request["year"]},
-                    {"month", request["month"]},
-                    {"day", request["day"]}
-                }
-            }
-        });
+        $item["inventoryQuantity"] = $item["inventoryQuantity"] - 1;
+        $this->update("items", $iid, $item);
 
-        double points = record["items"][data_index]["salePrice"];
+        $finance = [
+            "name" => "Sell Record",
+            "income" => $item["salePrice"],
+            "expenditure" => 0,
+            "date" => [
+                "year" => $year,
+                "month" => $month,
+                "day" => $day,
+            ]
+        ];
 
-        data_index = request["customerID"];
-        double totalPoints = record["customers"][data_index]["totalPoints"];
+        $payment = $item["salePrice"];
+        $points = $payment * $this->rate;
 
-        record["customers"][data_index]["purchases"].push_back(
-        {
-            {"purchaseTime", request["time"]},
-            {"payment", points},
-            {"points", points * rate}
-        });
-        record["customers"][data_index]["totalPoints"] = totalPoints + points * rate;
+        $customers = $this->select("customers");
+        $customer = $customers[$cid];
 
-        response ={{"code", 0}};
-        cout << response;
-        return 0;
+        array_push($customer["purchases"], [
+            "purchaseTime" => $time,
+            "payment" => $payment,
+            "points" => $points
+        ]);
+
+        $customer["totalPoints"] = $customer["totalPoints"] + $points;
+
+        $this->update("customers", $cid, $customer);
     }
 
+/*
     int return_item()
     {
         data_index = request["itemID"];
@@ -93,5 +92,5 @@ class Sales
         };
         cout << response;
         return 0;
-    }
+    }*/
 }
