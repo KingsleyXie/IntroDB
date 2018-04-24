@@ -24,7 +24,8 @@ int main(int argc, char const *argv[])
 	else
 	{
 		json operation, data;
-		std::string db_name, tb_name, op_type;
+		std::string db_name, tb_name;
+		int op_type;
 
 		try {
 			operation = json::parse(argv[1]);
@@ -42,7 +43,44 @@ int main(int argc, char const *argv[])
 
 		Db db(db_name);
 		db.restore(db_name + ".json");
-		db.traverse();
+
+		json result;
+		switch (op_type)
+		{
+			case 0: // count
+				std::cout << db.count(tb_name);
+				break;
+
+			case 1: // select
+				db.select(tb_name, result);
+				std::cout << result;
+				break;
+
+			case 2: // insert
+				db.insert(tb_name, operation["data"]);
+				break;
+
+			case 3: // update
+				db.update(tb_name, operation["id"], operation["data"]);
+				break;
+
+			case 4: // remove
+				db.remove(tb_name, operation["id"]);
+				break;
+
+			case 5: // addtable
+				db.addTable(tb_name);
+				break;
+
+			case 6: // removetable
+				db.removeTable(tb_name);
+				break;
+
+			default:
+				throw "Operation Type Error!";
+		}
+
+		db.dump(db_name + ".json");
 	}
 	return 0;
 }
