@@ -38,12 +38,14 @@ TEST_CASE( "B-Tree Db Test" )
 		);
 
 		REQUIRE_NOTHROW( db.addTable("table2") );
+		REQUIRE( db.count("table2") == 0);
 
 		data["foo"] = "bar";
 		REQUIRE_NOTHROW( db.insert("table1", data) );
 		REQUIRE_NOTHROW( db.traverse() );
 
 		REQUIRE_NOTHROW( db.insert("table2", data) );
+		REQUIRE( db.count("table2") == 1);
 
 		data["update"] = "update";
 		REQUIRE_NOTHROW( db.update("table1", 1, data) );
@@ -61,10 +63,12 @@ TEST_CASE( "B-Tree Db Test" )
 		);
 
 		REQUIRE_NOTHROW( db.insert("table1", data) );
-		std::cout << result;
 		REQUIRE_NOTHROW( db.traverse() );
+		REQUIRE( db.count("table1") == 2);
 
 		REQUIRE_NOTHROW( db.remove("table1", 1) );
+		REQUIRE( db.count("table1") == 1);
+
 		REQUIRE_NOTHROW( db.select("table1", result) );
 		std::cout << result;
 		REQUIRE_NOTHROW( db.traverse() );

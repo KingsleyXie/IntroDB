@@ -45,6 +45,13 @@ public:
 		tables[name].remove(node);
 	}
 
+	int count(std::string name)
+	{
+		json result;
+		select(name, result);
+		return result.size();
+	}
+
 
 
 	bool checkTable(std::string name)
