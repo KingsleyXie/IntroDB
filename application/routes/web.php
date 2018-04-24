@@ -15,5 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::any('/sell', 'System\SalesController@sellItem');
-Route::any('/inventory', 'System\InventoryController@index');
+Route::get('/limits', 'LimitController@index');
+Route::any('/items/display/', 'InventoryController@index');
+Route::any('/items/display/', 'InventoryController@index');
