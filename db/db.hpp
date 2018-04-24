@@ -101,11 +101,37 @@ public:
 
 	void dump(std::ostream& stream)
 	{
-		//
+		json database, tables_info = json::array();
+		database["name"] = name;
+
+		for (std::map<std::string, BTree<KVNode> >::iterator i
+			= tables.begin(); i != tables.end(); ++i)
+		{
+			json table;
+			table["name"] = i->first;
+			i->second.selectAll(table["data"]);
+
+			tables_info.push_back(table);
+		}
+
+		database["tables"] = tables_info;
+		stream << database;
 	}
 
-	void restore()
+	void restore(std::istream& stream)
 	{
-		//
+		json database;
+		stream >> database;
+
+		name = database["name"];
+		for (int ti = 0; ti < database["tables"].size(); ++ti)
+		{
+			this->addTable(database["tables"][ti]["name"]);
+			for (int i = 0; i < database["tables"][ti]["data"].size(); ++i)
+			{
+				json row = database["tables"][ti]["data"][i];
+				this->insert(database["tables"][ti]["name"], i, row);
+			}
+		}
 	}
 };
