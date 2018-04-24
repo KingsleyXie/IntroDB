@@ -71,13 +71,12 @@ TEST_CASE( "Float B-Tree Test" )
 		REQUIRE_NOTHROW( float_tree.insert(52.6) );
 		REQUIRE_NOTHROW( float_tree.insert(12.3) );
 		REQUIRE_NOTHROW( float_tree.insert(351.336) );
-		REQUIRE_NOTHROW( float_tree.insert(97) );
+		REQUIRE_NOTHROW( float_tree.insert(17) );
 		REQUIRE_NOTHROW( float_tree.insert(1926.0817) );
 
 		REQUIRE_NOTHROW( float_tree.traverse() );
 
 		REQUIRE_NOTHROW( float_tree.insert(2.3) );
-		REQUIRE_NOTHROW( float_tree.insert(17) );
 		REQUIRE_NOTHROW( float_tree.insert(5464511) );
 
 		REQUIRE_NOTHROW( float_tree.traverse() );
