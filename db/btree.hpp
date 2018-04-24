@@ -92,7 +92,10 @@ public:
 		for (int i = 0; i < keynum; ++i)
 		{
 			if (!isLeaf) children[i]->select(result);
-			result.push_back(keys[i].value);
+			json node;
+			node["key"] = keys[i].key;
+			node["value"] = keys[i].value;
+			result.push_back(node);
 		}
 
 		if (!isLeaf) children[keynum]->select(result);
@@ -345,6 +348,8 @@ public:
 	~BTree() {}
 
 	int getNextId() { return ++autoID; }
+	int getAutoId() { return autoID; }
+	int setAutoId(int autoID) { this->autoID = autoID; }
 
 	void insert(T key)
 	{

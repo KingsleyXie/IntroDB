@@ -103,10 +103,16 @@ TEST_CASE( "Serialize Test" )
 		REQUIRE_NOTHROW( db.update("table1", 3, data) );
 
 		REQUIRE_NOTHROW( db.remove("table1", 2) );
+		REQUIRE_NOTHROW( db.insert("table1", data) );
 
 		data["update"] = "updated";
 		REQUIRE_NOTHROW( db.insert("table1", data) );
 		REQUIRE_NOTHROW( db.insert("table1", data) );
+		REQUIRE_NOTHROW( db.traverse() );
+
+		REQUIRE_NOTHROW( db.insert("table2", data) );
+		REQUIRE_NOTHROW( db.insert("table2", data) );
+		REQUIRE_NOTHROW( db.remove("table2", 1) );
 
 		REQUIRE_NOTHROW( db.traverse() );
 

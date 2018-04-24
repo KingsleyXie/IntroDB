@@ -99,19 +99,21 @@ public:
 	void dump(std::ostream& stream)
 	{
 		json database; database["name"] = name;
-		json tables_info = json::array();
+		json tables_dump = json::array();
 
 		for (std::map<std::string, BTree<KVNode> >::iterator i
 			= tables.begin(); i != tables.end(); ++i)
 		{
-			json table;
-			table["name"] = i->first;
-			i->second.selectAll(table["data"]);
+			json table_dump;
 
-			tables_info.push_back(table);
+			table_dump["name"] = i->first;
+			table_dump["id"] = tables["name"].getAutoId();
+			i->second.selectAll(table_dump["data"]);
+
+			tables_dump.push_back(table_dump);
 		}
 
-		database["tables"] = tables_info;
+		database["tables"] = tables_dump;
 		stream << database;
 	}
 
@@ -122,12 +124,24 @@ public:
 
 		for (int ti = 0; ti < database["tables"].size(); ++ti)
 		{
-			this->addTable(database["tables"][ti]["name"]);
-			for (int i = 0; i < database["tables"][ti]["data"].size(); ++i)
+			json table = database["tables"][ti];
+			addTable(table["name"]);
+			tables[table["name"]].setAutoId(table["id"]);
+
+			for (int i = 0; i < table["data"].size(); ++i)
 			{
-				json row = database["tables"][ti]["data"][i];
-				this->insert(database["tables"][ti]["name"], row);
+				json row = table["data"][i];
+				restore_insert(table["name"], row["key"], row["value"]);
 			}
 		}
+	}
+
+private:
+	void restore_insert(std::string name, int id, json data)
+	{
+		if (!checkTable(name)) throw "Table not exists!\n";
+
+		KVNode node(id, data);
+		tables[name].insert(node);
 	}
 };
