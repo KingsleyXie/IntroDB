@@ -332,16 +332,19 @@ class BTree
 {
 private:
 	BTreeNode<T> *root;
-	int order;
+	int order, autoID;
 
 public:
-	BTree(int order =DEFAULT_ORDER)
+	BTree(int order =DEFAULT_ORDER, int autoID =0)
 	{
 		root = NULL;
 		this->order = order;
+		this->autoID = autoID;
 	}
 
 	~BTree() {}
+
+	int getNextId() { return ++autoID; }
 
 	void insert(T key)
 	{

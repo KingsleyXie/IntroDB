@@ -10,10 +10,7 @@ public:
 	std::string name;
 	std::map<std::string, BTree<KVNode> > tables;
 
-	Db(std::string name)
-	{
-		this->name = name;
-	}
+	Db(std::string name) { this->name = name; }
 
 	~Db() {}
 
@@ -24,11 +21,11 @@ public:
 		tables[name].selectAll(result);
 	}
 
-	void insert(std::string name, int id, json data)
+	void insert(std::string name, json data)
 	{
 		if (!checkTable(name)) throw "Table not exists!\n";
 
-		KVNode node(id, data);
+		KVNode node(tables[name].getNextId(), data);
 		tables[name].insert(node);
 	}
 
@@ -101,8 +98,8 @@ public:
 
 	void dump(std::ostream& stream)
 	{
-		json database, tables_info = json::array();
-		database["name"] = name;
+		json database; database["name"] = name;
+		json tables_info = json::array();
 
 		for (std::map<std::string, BTree<KVNode> >::iterator i
 			= tables.begin(); i != tables.end(); ++i)
@@ -120,17 +117,16 @@ public:
 
 	void restore(std::istream& stream)
 	{
-		json database;
-		stream >> database;
-
+		json database; stream >> database;
 		name = database["name"];
+
 		for (int ti = 0; ti < database["tables"].size(); ++ti)
 		{
 			this->addTable(database["tables"][ti]["name"]);
 			for (int i = 0; i < database["tables"][ti]["data"].size(); ++i)
 			{
 				json row = database["tables"][ti]["data"][i];
-				this->insert(database["tables"][ti]["name"], i, row);
+				this->insert(database["tables"][ti]["name"], row);
 			}
 		}
 	}
