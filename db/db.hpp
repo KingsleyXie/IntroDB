@@ -78,13 +78,34 @@ public:
 
 	void traverse()
 	{
-		std::cout << "\nTraversing Database " << name;
+		std::cout << "\n\n\n";
+		for (int l = 0; l < 75; ++l)
+			std::cout << "*";
+
+		std::cout << "\nTraversing Database: " << name;
+
 		for (std::map<std::string, BTree<KVNode> >::iterator i
 			= tables.begin(); i != tables.end(); ++i)
 		{
+			std::cout << "\n";
+			for (int l = 0; l < 60; ++l)
+				std::cout << "-";
+
 			std::cout << "\nTable: " << i->first;
-			std::cout << "\tData: ";
+			std::cout << "\tData: \n";
 			i->second.traverse();
 		}
+
+		std::cout << "\n";
+	}
+
+	void dump(std::ostream& stream)
+	{
+		//
+	}
+
+	void restore()
+	{
+		//
 	}
 };
