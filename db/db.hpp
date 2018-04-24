@@ -17,28 +17,46 @@ public:
 
 	~Db() {}
 
-	void update(std::string table, json data)
+	void insert(std::string name, int id, json data)
 	{
-		//
+		if (!checkTable(name)) throw "Table not exists!\n";
+
+		KVNode node(id, data);
+		tables[name].insert(node);
 	}
 
-	bool getTable(std::string name, BTree<KVNode> &table)
+	void update(std::string name, int id, json data)
+	{
+		if (!checkTable(name)) throw "Table not exists!\n";
+
+		KVNode node(id, data);
+		tables[name].update(node);
+	}
+
+	void remove(std::string name, int id)
+	{
+		if (!checkTable(name)) throw "Table not exists!\n";
+
+		KVNode node(id);
+		tables[name].remove(node);
+	}
+
+
+
+	bool checkTable(std::string name)
 	{
 		for (std::map<std::string, BTree<KVNode> >::iterator i
 			= tables.begin(); i != tables.end(); ++i)
-			if (i->first == name)
-			{
-				table = i->second;
-				return true;
-			}
+		{
+			if (i->first == name) return true;
+		}
+
 		return false;
 	}
 
 	void addTable(std::string name)
 	{
-		BTree<KVNode> temp;
-		if (getTable(name, temp))
-			throw "Table name duplicated!\n";
+		if (checkTable(name)) throw "Table name duplicated!\n";
 
 		BTree<KVNode> tb;
 		tables[name] = tb;
@@ -46,9 +64,7 @@ public:
 
 	void removeTable(std::string name)
 	{
-		BTree<KVNode> temp;
-		if (!getTable(name, temp))
-			throw "Table not exists!\n";
+		if (!checkTable(name)) throw "Table not exists!\n";
 
 		tables.erase(name);
 	}
