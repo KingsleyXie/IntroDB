@@ -1,6 +1,4 @@
 # IntroDB
 Naive Database Implementation
 
-TODO: getall, update
-socket database
-comparision
+TODO: socket, database, comparision

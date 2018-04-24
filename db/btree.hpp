@@ -85,6 +85,17 @@ public:
 		if (!isLeaf) children[keynum]->traverse();
 	}
 
+	void select(json &result)
+	{
+		for (int i = 0; i < keynum; ++i)
+		{
+			if (!isLeaf) children[i]->select(result);
+			result.push_back(keys[i].value);
+		}
+
+		if (!isLeaf) children[keynum]->select(result);
+	}
+
 	void dump(std::ostream& stream)
 	{
 		for (int i = 0; i < keynum; ++i)
@@ -363,14 +374,21 @@ public:
 		std::cout << "\n";
 	}
 
+	// Specially wrote for B-Trees of "KVNode" Type
+	void selectAll(json &result)
+	{
+		if (root != NULL)
+			root->select(result);
+	}
+
+	// Specially wrote for B-Trees of "KVNode" Type
 	void update(T key)
 	{
 		if (root == NULL) throw "The tree is empty!";
 		root->update(key);
 	}
 
-	// Note: "dump" and "restore" functions are
-	// specially wrote for B-Trees of "KVNode" Type
+	// Specially wrote for B-Trees of "KVNode" Type
 	void dump(std::ostream& stream)
 	{
 		stream << "[";
@@ -381,6 +399,7 @@ public:
 		stream << "]";
 	}
 
+	// Specially wrote for B-Trees of "KVNode" Type
 	void restore(std::istream& stream)
 	{
 		json data;
