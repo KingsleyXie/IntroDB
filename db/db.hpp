@@ -75,4 +75,16 @@ public:
 
 		tables.erase(name);
 	}
+
+	void traverse()
+	{
+		std::cout << "\nTraversing Database " << name;
+		for (std::map<std::string, BTree<KVNode> >::iterator i
+			= tables.begin(); i != tables.end(); ++i)
+		{
+			std::cout << "\nTable: " << i->first;
+			std::cout << "\tData: ";
+			i->second.traverse();
+		}
+	}
 };
