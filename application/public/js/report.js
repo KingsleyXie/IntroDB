@@ -1,3 +1,9 @@
+var date = new Date();
+
+var year = date.getFullYear();
+var month = date.getMonth() + 1;
+var day = date.getDate();
+
 var chart = [
 	new CanvasJS.Chart("chart0", {
 		title: { text: year + '年' + month + '月' + day + '日收入报表' },
@@ -35,7 +41,7 @@ var chart = [
 		}],
 		toolTip:{ shared: true },
 		axisX:{
-			labelFormatter: function(){return "";},
+			labelFormatter: function(){ return ""; },
 			tickLength: 0,
 		},
 		data: [{
@@ -127,10 +133,7 @@ $(document).ready(function() {
 		return chart[chartIndex].options.data[dataIndex].dataPoints;
 	}
 
-	$.post(
-		'./assets/API/api.cgi',
-		JSON.stringify({"destination": 5, "operation": 1}),
-		function(response) {
+	$.get('report/finance', function(response) {
 			//Initialize Data Of Monthly Report Chart
 			for (var i = 1; i <= day; i++) {
 				new Array(dp(3,0), dp(4,0), dp(5,0), dp(5,1), dp(5,2))
@@ -139,7 +142,7 @@ $(document).ready(function() {
 				})
 			}
 
-			$.each(response, function(i, f) {
+			$.each(response.data, function(i, f) {
 				//Iterate Each Finance Data As 'f'
 				if (f.date.year == year
 					&& f.date.month == month

@@ -3,16 +3,16 @@ $(document).ready(function() {
 
 	$("#finance").submit(function(e) {
 		e.preventDefault();
-		
-		data = {"destination": 4, "operation": 2, "year": year, "month": month, "day": day};
-		$(this).serializeArray().map(function(x){data[x.name] = x.value;});
+
+		var data = {};
+		$(this).serializeArray().map(function(x) {
+			data[x.name] = x.value;
+		});
 		data["income"] = parseFloat(data["income"]);
 		data["expenditure"] = parseFloat(data["expenditure"]);
-		data = JSON.stringify(data);
 
 		$.post(
-			'./assets/API/api.cgi',
-			data,
+			'finance/add', data,
 			function(response) {
 				if (response.code == 0) {
 					Materialize.toast('财务流水添加成功！', 1700);
@@ -31,15 +31,14 @@ $(document).ready(function() {
 });
 
 function display() {
-	$.post(
-		'./assets/API/api.cgi',
-		JSON.stringify({"destination": 4, "operation": 1}),
+	$.get(
+		'finance/all',
 		function(response) {
 			$("#display").html('');
-			$.each(response, function(i, finance) {
+			$.each(response.data, function(i, finance) {
 				$("#display").append(
 				'<tr>' +
-					'<td>' + i + '</td>' +
+					'<td>' + finance.id + '</td>' +
 					'<td>' + finance.name + '</td>' +
 					'<td>' + finance.income + '</td>' +
 					'<td>' + finance.expenditure + '</td>' +

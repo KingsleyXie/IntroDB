@@ -4,34 +4,28 @@ $(document).ready(function() {
 
 	$("#inventory").submit(function(e) {
 		e.preventDefault();
-		
-		data = {
-			"destination": 2,
-			"operation": (modifyingInv ? 3 : 2),
-			"year": year,
-			"month": month,
-			"day": day,
-			"time": time,
-			"itemID": parseInt($("#itemID").val())
-		};
-		$(this).serializeArray().map(function(x){data[x.name] = x.value;});
+
+		data = { "itemID": parseInt($("#itemID").val()) };
+
+		$(this).serializeArray().map(function(x) {
+			data[x.name] = x.value;
+		});
 		data["supplierID"] = parseInt(data["supplierID"]);
 		data["inventoryQuantity"] = parseInt(data["inventoryQuantity"]);
 		data["threshold"] = parseInt(data["threshold"]);
 		data["price"] = parseFloat(data["price"]);
 		data["salePrice"] = parseFloat(data["salePrice"]);
-		data = JSON.stringify(data);
 
 		$.post(
-			'./assets/API/api.cgi',
-			data,
+			'inventory/' + (modifyingInv ?
+			('update/' + data["itemID"]) : 'add'), data,
 			function(response) {
 				if (response.code == 0) {
 					Materialize.toast('货物信息' + (modifyingInv ? '修改' : '添加') + '成功！', 1700);
 					setTimeout(function () {
 						$("#inventory").modal('close');
 						display();
-						
+
 						//Reset All Input Data
 						$("#inventory-header").text('添加货物');
 						$("#btn-inventory").text('确认添加');
@@ -164,16 +158,15 @@ function update() {
 }
 
 function display() {
-	$.post(
-		'./assets/API/api.cgi',
-		JSON.stringify({"destination": 2, "operation": 1}),
+	$.get(
+		'inventory/all',
 		function(response) {
 			$("#display").html('');
-			$("#itemID").attr("max", response.length - 1);
-			$.each(response, function(i, inv) {
+			$("#itemID").attr("max", response.data.length - 1);
+			$.each(response.data, function(i, inv) {
 				$("#display").append(
 				'<tr' + (inv.inventoryQuantity > inv.threshold ? '' : ' class="red lighten-1"') + '>' +
-					'<td>' + i + '</td>' +
+					'<td>' + inv.id + '</td>' +
 					'<td>' + inv.barcode + '</td>' +
 					'<td>' + inv.brand + '</td>' +
 					'<td>' + inv.name + '</td>' +
@@ -199,11 +192,8 @@ function display() {
 }
 
 function limitSet() {
-	$.post(
-		'./assets/API/api.cgi',
-		JSON.stringify({"destination": 1, "operation": 3}),
-		function(response) {
-			$('[name="supplierID"]').attr("max", response.suppliers - 1)
+	$.get('limits', function(response) {
+			$('[name="supplierID"]').attr("max", response.data.suppliers - 1)
 		}
 	);
 }

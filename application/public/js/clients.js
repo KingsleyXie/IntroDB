@@ -1,15 +1,14 @@
 function suppliers() {
-	$.post(
-		'./assets/API/api.cgi',
-		JSON.stringify({"destination": 5, "operation": 2}),
+	$.get(
+		'report/supplier',
 		function(response) {
 			$("#display").hide(600);
 			setTimeout(function () {
 				$("#display").html('');
-				$.each(response, function(i, supplier) {
+				$.each(response.data, function(i, supplier) {
 					$("#display").append(
 					'<div class="card">' +
-						'<div class="card-content" id="table' + i + '">' +
+						'<div class="card-content" id="table' + supplier.id + '">' +
 							'<table class="highlight">' +
 								'<thead>' +
 									'<tr>' +
@@ -19,7 +18,7 @@ function suppliers() {
 								'</thead>' +
 								'<tbody>' +
 									'<tr>' +
-										'<td>' + i + '</td>' +
+										'<td>' + supplier.id + '</td>' +
 										'<td>' + supplier.supplierName + '</td>' +
 									'</tr>' +
 								'</tbody>' +
@@ -28,7 +27,7 @@ function suppliers() {
 					'</div>');
 
 					if (supplier.transactions.length) {
-						$("#table" + i).append(
+						$("#table" + supplier.id).append(
 						'<div class="card-content subtable">' +
 							'<table class="highlight responsive-table">' +
 								'<thead>' +
@@ -40,13 +39,13 @@ function suppliers() {
 										'<th>商品单价</th>' +
 									'</tr>' +
 								'</thead>' +
-								'<tbody id="subtable' + i + '"></tbody>' +
+								'<tbody id="subtable' + supplier.id + '"></tbody>' +
 							'</table>' +
 						'</div>');
 					}
 
 					$.each(supplier.transactions, function(t, transaction) {
-						$("#subtable" + i).append(
+						$("#subtable" + supplier.id).append(
 						'<tr>' +
 							'<td>' + transaction.transactionTime + '</td>' +
 							'<td>' + transaction.itemID + '</td>' +
@@ -69,17 +68,16 @@ function suppliers() {
 }
 
 function customers() {
-	$.post(
-		'./assets/API/api.cgi',
-		JSON.stringify({"destination": 5, "operation": 3}),
+	$.get(
+		'report/customer',
 		function(response) {
 			$("#display").hide(600);
 			setTimeout(function () {
 				$("#display").html('');
-				$.each(response, function(i, customer) {
+				$.each(response.data, function(i, customer) {
 					$("#display").append(
 					'<div class="card">' +
-						'<div class="card-content" id="table' + i + '">' +
+						'<div class="card-content" id="table' + customer.id + '">' +
 							'<table class="highlight">' +
 								'<thead>' +
 									'<tr>' +
@@ -91,7 +89,7 @@ function customers() {
 								'</thead>' +
 								'<tbody>' +
 									'<tr>' +
-										'<td>' + i + '</td>' +
+										'<td>' + customer.id + '</td>' +
 										'<td>' + customer.customerName + '</td>' +
 										'<td>' + customer.customerNo + '</td>' +
 										'<td>' + customer.totalPoints + '</td>' +
@@ -102,7 +100,7 @@ function customers() {
 					'</div>');
 
 					if (customer.purchases.length) {
-						$("#table" + i).append(
+						$("#table" + customer.id).append(
 						'<div class="card-content subtable">' +
 							'<table class="highlight responsive-table">' +
 								'<thead>' +
@@ -112,13 +110,13 @@ function customers() {
 										'<th>积分</th>' +
 									'</tr>' +
 								'</thead>' +
-								'<tbody id="subtable' + i + '"></tbody>' +
+								'<tbody id="subtable' + customer.id + '"></tbody>' +
 							'</table>' +
 						'</div>');
 					}
 
 					$.each(customer.purchases, function(t, purchase) {
-						$("#subtable" + i).append(
+						$("#subtable" + customer.id).append(
 						'<tr>' +
 							'<td>' + purchase.purchaseTime + '</td>' +
 							'<td>' + purchase.payment + '</td>' +
