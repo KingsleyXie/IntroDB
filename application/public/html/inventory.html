@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>库存管理系统</title>
+	<link rel="shortcut icon" href="./pictures/icon.png">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/materialize/0.98.2/css/materialize.min.css">
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+	<div class="loading" id="loading">
+		<div class="preloader-wrapper active loading-circle">
+			<div class="spinner-layer spinner-blue">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-red">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-yellow">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-green">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<header>
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<div class="brand-logo center">库存管理系统</div>
+					<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
+					<ul class="right hide-on-med-and-down">
+						<li><a href="#inventory">添加货物</a></li>
+						<li><a href="#search">更新货物信息</a></li>
+						<li><a href="./">返回主页</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+		<ul class="side-nav" id="mobile-menu">
+			<li><a href="#inventory">添加货物</a></li>
+			<li><a href="#search">更新货物信息</a></li>
+			<li><a href="./">返回主页</a></li>
+		</ul>
+	</header>
+
+	<form class="modal" id="inventory">
+		<div class="modal-content">
+			<h5 id="inventory-header">添加货物</h5>
+			<div id="add-init">
+				<div class="row">
+					<div class="input-field col s12">
+						<input type="text" id="barcode" name="barcode">
+						<label for="barcode">请输入待添加商品的条形码</label>
+					</div>
+				</div>
+
+				<div class="center-align">
+					<a class="waves-effect waves-light btn" onclick="getDataFromAPI();">获取货物信息</a>
+					<a class="waves-effect waves-light btn" onclick="toggle();">手动录入数据</a>
+				</div>
+			</div>
+
+			<div class="progress" id="progress">
+				<div class="indeterminate"></div>
+			</div>
+
+			<div class="center-align item-info" id="item-info">
+				<div class="row">
+					<div class="input-field col s3">
+						<input type="number" id="supplierID" name="supplierID" required>
+						<label for="supplierID">供货商 ID</label>
+					</div>
+
+					<div class="input-field col s3">
+						<input type="text" id="brand" name="brand" required>
+						<label for="brand">商标</label>
+					</div>
+
+					<div class="input-field col s6">
+						<input type="text" id="name" name="name" required>
+						<label for="name">商品名</label>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s5">
+						<input type="text" id="unspsc" name="unspsc" required>
+						<label for="unspsc">分类</label>
+					</div>
+
+					<div class="input-field col s3">
+						<input type="text" id="type" name="type" required>
+						<label for="type">规格</label>
+					</div>
+
+					<div class="input-field col s4">
+						<input type="date" class="datepicker" id="expired-time" name="expiredTime">
+						<label for="expired-time">过期时间</label>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="input-field col s3">
+						<input type="number" step="0.01" id="price" name="price" required>
+						<label for="price">进货价</label>
+					</div>
+
+					<div class="input-field col s3">
+						<input type="number" step="0.01" id="sale-price" name="salePrice" required>
+						<label for="sale-price">售价</label>
+					</div>
+
+					<div class="input-field col s3">
+						<input type="number" id="inventory-quantity" name="inventoryQuantity" required>
+						<label for="inventory-quantity">库存量</label>
+					</div>
+
+					<div class="input-field col s3">
+						<input type="number" id="threshold" name="threshold" value="50" required>
+						<label for="threshold" active>报警阈值</label>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button type="submit" class="btn-flat" id="btn-inventory">确认添加</button>
+		</div>
+	</form>
+
+	<div class="modal" id="search">
+		<div class="modal-content">
+			<h5>搜索货物信息</h5>
+			<div class="row">
+				<div class="input-field col s12">
+					<input type="number" id="itemID" name="itemID">
+					<label for="itemID">请输入商品 ID</label>
+				</div>
+			</div>
+
+			<div class="center-align">
+				<button class="waves-effect waves-light btn" onclick="update();">确定</button>
+			</div>
+		</div>
+	</div>
+
+    <table class="highlight responsive-table">
+    	<thead>
+    		<tr>
+    			<th>商品 ID</th>
+    			<th>条形码</th>
+    			<th>商标</th>
+    			<th>商品名</th>
+    			<th>分类</th>
+    			<th>规格</th>
+    			<th>进货价</th>
+    			<th>售价</th>
+    			<th>库存量</th>
+    			<th>报警阈值</th>
+    			<th>过期时间</th>
+    			<th>入库时间</th>
+    			<th>更新时间</th>
+    		</tr>
+    	</thead>
+    	<tbody id="display"></tbody>
+    </table>
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/materialize/0.98.2/js/materialize.min.js"></script>
+	<script src="./js/initialize.js"></script>
+	<script src="./js/inventory.js"></script>
+</body>
+</html>

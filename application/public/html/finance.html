@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>财务管理系统</title>
+	<link rel="shortcut icon" href="./pictures/icon.png">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/materialize/0.98.2/css/materialize.min.css">
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+	<div class="loading" id="loading">
+		<div class="preloader-wrapper active loading-circle">
+			<div class="spinner-layer spinner-blue">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-red">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-yellow">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-green">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<header>
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<div class="brand-logo center">财务管理系统</div>
+					<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
+					<ul class="right hide-on-med-and-down">
+						<li><a href="#finance">增加财务流水</a></li>
+						<li><a href="./report">查看财务报表</a></li>
+						<li><a href="./">返回主页</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+		<ul class="side-nav" id="mobile-menu">
+			<li><a href="#finance">增加财务流水</a></li>
+			<li><a href="./report">查看财务报表</a></li>
+			<li><a href="./">返回主页</a></li>
+		</ul>
+	</header>
+
+	<form class="modal" id="finance">
+		<div class="modal-content">
+			<h5>增加财务流水</h5>
+			<div class="row">
+				<div class="input-field col s4">
+					<input type="text" id="finance-name" name="financeName" required>
+					<label for="finance-name">项目名</label>
+				</div>
+
+				<div class="input-field col s4">
+					<input type="number" step="0.01" id="income" name="income" required>
+					<label for="income">收入</label>
+				</div>
+
+				<div class="input-field col s4">
+					<input type="number" step="0.01" id="expenditure" name="expenditure" required>
+					<label for="expenditure">支出</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button type="submit" class="btn-flat">确认添加</button>
+		</div>
+	</form>
+
+    <table class="highlight responsive-table">
+    	<thead>
+    		<tr>
+    			<th>流水号</th>
+    			<th>项目名</th>
+    			<th>收入</th>
+    			<th>支出</th>
+    			<th>年</th>
+    			<th>月</th>
+    			<th>日</th>
+    		</tr>
+    	</thead>
+    	<tbody id="display"></tbody>
+    </table>
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/materialize/0.98.2/js/materialize.min.js"></script>
+	<script src="./js/initialize.js"></script>
+	<script src="./js/finance.js"></script>
+</body>
+</html>

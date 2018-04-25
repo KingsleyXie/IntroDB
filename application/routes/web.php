@@ -11,22 +11,50 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+
+/************ Resources ************/
+Route::get('/', function() {
+	return \File::get(public_path() . '/html/index.html');
+});
+Route::get('/clients', function() {
+	return \File::get(public_path() . '/html/clients.html');
+});
+Route::get('/finance', function() {
+	return \File::get(public_path() . '/html/finance.html');
+});
+Route::get('/inventory', function() {
+	return \File::get(public_path() . '/html/inventory.html');
+});
+Route::get('/report', function() {
+	return \File::get(public_path() . '/html/report.html');
+});
+Route::get('/sales', function() {
+	return \File::get(public_path() . '/html/sales.html');
+});
+Route::get('/staffs', function() {
+	return \File::get(public_path() . '/html/staffs.html');
 });
 
 
 
+
+
+/************ Interfaces ************/
+
+// Database Initialization
 Route::get(
 	'/init',
 	'InitializeDB@index'
 );
 
+// Sales Input Limits
 Route::get(
 	'/limits',
 	'SalesController@limits'
 );
 
+// Sell & Return
 Route::get(
 	'/sell/customer/{customer}/inventory/{inventory}',
 	'SalesController@sell'
@@ -36,6 +64,7 @@ Route::get(
 	'SalesController@return'
 );
 
+// Inventory select, insert & update
 Route::get(
 	'/inventory/all',
 	'InventoryController@index'
@@ -49,6 +78,7 @@ Route::post(
 	'InventoryController@update'
 );
 
+// Staff select, insert & update
 Route::get(
 	'/staff/all',
 	'StaffController@index'
@@ -62,6 +92,7 @@ Route::post(
 	'StaffController@update'
 );
 
+// Finance select & insert
 Route::get(
 	'/finance/all',
 	'FinanceController@index'
@@ -71,6 +102,7 @@ Route::post(
 	'FinanceController@add'
 );
 
+// Report select
 Route::get(
 	'/report/finance',
 	'ReportController@finance'

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>财务报表</title>
+	<link rel="shortcut icon" href="./pictures/icon.png">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/materialize/0.98.2/css/materialize.min.css">
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+	<div class="loading" id="loading">
+		<div class="preloader-wrapper active loading-circle">
+			<div class="spinner-layer spinner-blue">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-red">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-yellow">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+
+			<div class="spinner-layer spinner-green">
+				<div class="circle-clipper left">
+					<div class="circle"></div>
+				</div>
+
+				<div class="gap-patch">
+					<div class="circle"></div>
+				</div>
+
+				<div class="circle-clipper right">
+					<div class="circle"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<header>
+		<div class="navbar-fixed">
+			<nav class="report">
+				<div class="nav-wrapper">
+					<div class="brand-logo center">财务报表</div>
+					<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
+					<ul class="right hide-on-med-and-down">
+						<li><a href="./finance">财务流水明细</a></li>
+						<li><a href="./">返回主页</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+		<ul class="side-nav" id="mobile-menu">
+			<li><a href="./finance">财务流水明细</a></li>
+			<li><a href="./">返回主页</a></li>
+		</ul>
+	</header>
+
+    <div class="chart" id="chart0"></div>
+    <div class="chart" id="chart1"></div>
+    <div class="chart" id="chart2"></div>
+    <div class="chart" id="chart3"></div>
+    <div class="chart" id="chart4"></div>
+    <div class="chart" id="chart5"></div>
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/materialize/0.98.2/js/materialize.min.js
+"></script>
+	<script src="./js/canvasjs.min.js"></script>
+	<script src="./js/jquery.inview.min.js"></script>
+	<script src="./js/initialize.js"></script>
+	<script src="./js/report.js"></script>
+</body>
+</html>

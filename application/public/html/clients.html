@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<title>客户管理系统</title>
+	<link rel="shortcut icon" href="./pictures/icon.png">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/materialize/0.98.2/css/materialize.min.css">
+	<link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+	<header>
+		<div class="navbar-fixed">
+			<nav>
+				<div class="nav-wrapper">
+					<div class="brand-logo center">客户管理系统</div>
+					<a href="#" data-activates="mobile-menu" class="button-collapse">菜单</a>
+					<ul class="right hide-on-med-and-down">
+						<li><a href="#" onclick="suppliers(); return false;">供货商交易记录</a></li>
+						<li><a href="#" onclick="customers(); return false;">超市会员信息</a></li>
+						<li><a href="./">返回主页</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+		<ul class="side-nav" id="mobile-menu">
+			<li><a href="#" onclick="suppliers(); return false;">供货商交易记录</a></li>
+			<li><a href="#" onclick="customers(); return false;">超市会员信息</a></li>
+			<li><a href="./">返回主页</a></li>
+		</ul>
+	</header>
+
+	<div id="display">
+		<div class="row placeholder">
+			<a href="#" onclick="suppliers(); return false;">
+				<div class="col s12 m5">
+					<div class="card">
+						<div class="card-image" >
+							<img class="placeholder-image" src="./pictures/suppliers.jpg">
+							<span class="card-title black-text">供货商交易记录</span>
+						</div>
+					</div>
+				</div>
+			</a>
+
+			<a href="#" onclick="customers(); return false;">
+				<div class="col s12 m5 right">
+					<div class="card">
+						<div class="card-image">
+							<img class="placeholder-image" src="./pictures/customers.jpg">
+							<span class="card-title black-text">超市会员信息</span>
+						</div>
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/materialize/0.98.2/js/materialize.min.js"></script>
+	<script src="./js/initialize.js"></script>
+	<script src="./js/clients.js"></script>
+</body>
+</html>
