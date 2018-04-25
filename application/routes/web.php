@@ -21,17 +21,17 @@ Route::post('/sell', 'SalesController@sell');
 Route::post('/return', 'SalesController@return');
 Route::get('/limits', 'SalesController@limits');
 
-Route::get('/inventory', 'InventoryController@index');
+Route::get('/inventory/all', 'InventoryController@index');
 Route::post('/inventory/add', 'InventoryController@add');
-Route::post('/inventory/update', 'InventoryController@update');
+Route::post('/inventory/update/{id}', 'InventoryController@update');
 
-Route::get('/staff', 'StaffController@index');
+Route::get('/staff/all', 'StaffController@index');
 Route::post('/staff/add', 'StaffController@add');
-Route::post('/staff/update', 'StaffController@update');
+Route::post('/staff/update/{id}', 'StaffController@update');
 
-Route::get('/finance', 'FinanceController@index');
+Route::get('/finance/all', 'FinanceController@index');
 Route::post('/finance/add', 'FinanceController@add');
 
-Route::get('/report/finance', 'ReportController@finance');
-Route::get('/report/suppliers', 'ReportController@suppliers');
-Route::get('/report/customers', 'ReportController@customers');
+Route::get('/report/finance/all', 'ReportController@finance');
+Route::get('/report/supplier/all', 'ReportController@suppliers');
+Route::get('/report/customer/all', 'ReportController@customers');

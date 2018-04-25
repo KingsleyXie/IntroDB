@@ -14,11 +14,11 @@ class InitializeDB extends Controller
 		fwrite($file, config('db.init.db'));
 		fclose($file);
 
-		$this->insert('customers', config('db.init.customers'));
+		$this->insert('customer', config('db.init.customer'));
 		$this->insert('finance', config('db.init.finance'));
-		$this->insert('items', config('db.init.items'));
-		$this->insert('staffs', config('db.init.staffs'));
-		$this->insert('suppliers', config('db.init.suppliers'));
+		$this->insert('inventory', config('db.init.inventory'));
+		$this->insert('staff', config('db.init.staff'));
+		$this->insert('supplier', config('db.init.supplier'));
 
 		return response()->json([
 			'code' => 0,
