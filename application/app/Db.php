@@ -4,8 +4,6 @@ namespace App;
 
 class Db
 {
-	private $db_name = "db";
-
 	function __construct()
 	{
 		if (!file_exists('db/app.exe'))
@@ -50,7 +48,7 @@ class Db
 	public function getCount($table)
 	{
 		$operation = [
-			"db_name" => $this->db_name,
+			"db_name" => config('db.name'),
 			"tb_name" => $table,
 			"op_type" => 0
 		];
@@ -61,7 +59,7 @@ class Db
 	public function select($table)
 	{
 		$operation = [
-			"db_name" => $this->db_name,
+			"db_name" => config('db.name'),
 			"tb_name" => $table,
 			"op_type" => 1
 		];
@@ -72,7 +70,7 @@ class Db
 	public function insert($table, $data)
 	{
 		$operation = [
-			"db_name" => $this->db_name,
+			"db_name" => config('db.name'),
 			"tb_name" => $table,
 			"op_type" => 2,
 			"data" => $data
@@ -84,7 +82,7 @@ class Db
 	public function update($table, $id, $data)
 	{
 		$operation = [
-			"db_name" => $this->db_name,
+			"db_name" => config('db.name'),
 			"tb_name" => $table,
 			"op_type" => 3,
 			"id" => $id,
@@ -97,7 +95,7 @@ class Db
 	public function remove($table)
 	{
 		$operation = [
-			"db_name" => $this->db_name,
+			"db_name" => config('db.name'),
 			"tb_name" => $table,
 			"op_type" => 4,
 			"id" => $id
@@ -109,7 +107,7 @@ class Db
 	public function addTable($name)
 	{
 		$operation = [
-			"db_name" => $this->db_name,
+			"db_name" => config('db.name'),
 			"tb_name" => $name,
 			"op_type" => 5
 		];
@@ -120,7 +118,7 @@ class Db
 	public function removeTable($name)
 	{
 		$operation = [
-			"db_name" => $this->db_name,
+			"db_name" => config('db.name'),
 			"tb_name" => $name,
 			"op_type" => 6,
 		];
