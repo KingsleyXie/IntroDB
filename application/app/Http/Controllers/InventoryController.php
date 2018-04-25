@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\System;
+namespace App\Http\Controllers;
 
 use App\Db;
 
@@ -11,11 +11,11 @@ class InventoryController extends Controller
 {
     public function index()
     {
-        $model = new Db;
+        $db = new Db;
 
         return response()->json([
             'code' => 0,
-            'data' => $model->select("inventory")
+            'data' => $db->select("customers")
         ]);
     }
 }
