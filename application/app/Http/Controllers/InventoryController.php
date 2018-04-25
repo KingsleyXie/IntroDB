@@ -15,7 +15,20 @@ class InventoryController extends Controller
 
         return response()->json([
             'code' => 0,
-            'data' => $db->select("customers")
+            'data' => $db->select("inventory")
+        ]);
+    }
+
+    public function add(Request $request)
+    {
+        $db = new Db;
+        $db->insert(
+        	"inventory",
+        	$request->all()
+        );
+
+        return response()->json([
+            'code' => 0
         ]);
     }
 }

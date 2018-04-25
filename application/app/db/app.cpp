@@ -1,4 +1,4 @@
-#include "../../../../db/db.hpp"
+#include "../../../db/db.hpp"
 
 int main(int argc, char const *argv[])
 {

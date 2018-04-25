@@ -130,6 +130,8 @@ public:
 			table_dump["name"] = i->first;
 			table_dump["id"] = tables[table_dump["name"]].getAutoId();
 			i->second.selectAll(table_dump["data"]);
+			if (table_dump["data"].size() == 0)
+				table_dump["data"] = json::array();
 
 			tables_dump.push_back(table_dump);
 		}
