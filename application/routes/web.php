@@ -17,9 +17,15 @@ Route::get('/', function () {
 
 Route::get('/init', 'InitializeDB@index');
 
-Route::post('/sell', 'SalesController@sell');
-Route::post('/return', 'SalesController@return');
 Route::get('/limits', 'SalesController@limits');
+Route::get(
+	'/sell/customer/{customer}/inventory/{inventory}',
+	'SalesController@sell'
+);
+Route::get(
+	'/return/customer/{customer}/inventory/{inventory}',
+	'SalesController@return'
+);
 
 Route::get('/inventory/all', 'InventoryController@index');
 Route::post('/inventory/add', 'InventoryController@add');

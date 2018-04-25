@@ -347,7 +347,7 @@ public:
 
 	~BTree() {}
 
-	int getNextId() { return ++autoID; }
+	int getNextId() { return autoID++; }
 	int getAutoId() { return autoID; }
 	int setAutoId(int autoID) { this->autoID = autoID; }
 
