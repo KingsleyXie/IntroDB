@@ -15,9 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/init', 'InitializeDB@index');
 
-Route::get('/limits', 'SalesController@limits');
+
+Route::get(
+	'/init',
+	'InitializeDB@index'
+);
+
+Route::get(
+	'/limits',
+	'SalesController@limits'
+);
+
 Route::get(
 	'/sell/customer/{customer}/inventory/{inventory}',
 	'SalesController@sell'
@@ -27,17 +36,50 @@ Route::get(
 	'SalesController@return'
 );
 
-Route::get('/inventory/all', 'InventoryController@index');
-Route::post('/inventory/add', 'InventoryController@add');
-Route::post('/inventory/update/{id}', 'InventoryController@update');
+Route::get(
+	'/inventory/all',
+	'InventoryController@index'
+);
+Route::post(
+	'/inventory/add',
+	'InventoryController@add'
+);
+Route::post(
+	'/inventory/update/{id}',
+	'InventoryController@update'
+);
 
-Route::get('/staff/all', 'StaffController@index');
-Route::post('/staff/add', 'StaffController@add');
-Route::post('/staff/update/{id}', 'StaffController@update');
+Route::get(
+	'/staff/all',
+	'StaffController@index'
+);
+Route::post(
+	'/staff/add',
+	'StaffController@add'
+);
+Route::post(
+	'/staff/update/{id}',
+	'StaffController@update'
+);
 
-Route::get('/finance/all', 'FinanceController@index');
-Route::post('/finance/add', 'FinanceController@add');
+Route::get(
+	'/finance/all',
+	'FinanceController@index'
+);
+Route::post(
+	'/finance/add',
+	'FinanceController@add'
+);
 
-Route::get('/report/finance', 'ReportController@finance');
-Route::get('/report/supplier', 'ReportController@supplier');
-Route::get('/report/customer', 'ReportController@customer');
+Route::get(
+	'/report/finance',
+	'ReportController@finance'
+);
+Route::get(
+	'/report/supplier',
+	'ReportController@supplier'
+);
+Route::get(
+	'/report/customer',
+	'ReportController@customer'
+);

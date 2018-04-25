@@ -6,8 +6,8 @@ class Db
 {
 	function __construct()
 	{
-		if (!file_exists('db/app.exe'))
-			shell_exec('g++ -std=c++11 -o db/app.exe db/app.cpp');
+		if (!file_exists(config('db.exepath')))
+			shell_exec(config('db.compile'));
 	}
 
 	private function db_execute($operation)
@@ -16,13 +16,16 @@ class Db
 			'"', '\"', json_encode($operation)
 		);
 
-		$cmd = 'cd ../app/db && app.exe "' . $operation . '" 2>&1';
+		// Append "2>&1" to get stderr together
+		$operation = '"' . $operation . '"';
+
+		$cmd = config('db.run') . $operation;
 		$result = shell_exec($cmd);
 
 		return $result;
 
 		/*
-		Another way to process both stdin and stderr:
+		Another way to get stdin and stderr together:
 
 
 		$cmd = "app.exe \"$operation\"";
@@ -42,7 +45,6 @@ class Db
 			echo $out, $err, $rtv;
 		}
 		*/
-
 	}
 
 	public function getCount($table)
