@@ -1,22 +1,30 @@
 $(document).ready(function() {
 	display();
-    $("#entry-time").pickadate('picker').set('select', new Date()).trigger('change');
-	
+	$("#entry-time").pickadate('picker')
+	.set('select', new Date()).trigger('change');
+
 	$("#staff").submit(function(e) {
 		e.preventDefault();
 
-		data = {"destination": 3, "operation": (modifyingStaff ? 3 : 2)};
-		$(this).serializeArray().map(function(x){data[x.name] = x.value;});
+		var data = {};
+		$(this).serializeArray().map(function(x) {
+			data[x.name] = x.value;
+		});
+
 		data["staffID"] = parseInt($("#ID").val());
 		data["salary"] = parseFloat(data["salary"]);
-		data = JSON.stringify(data);
 
 		$.post(
-			'./assets/API/api.cgi',
-			data,
+			modifyingStaff ?
+			'staff/update/' + data["staffID"] : 'staff/add', data,
 			function(response) {
 				if (response.code == 0) {
-					Materialize.toast('员工信息' + (modifyingStaff ? '修改' : '添加') + '成功！', 1700);
+					Materialize.toast(
+						'员工信息' +
+						(modifyingStaff ? '修改' : '添加') +
+						'成功！', 1700
+					);
+
 					setTimeout(function () {
 						$("#staff").modal('close');
 						display();
@@ -59,24 +67,25 @@ function update() {
 	$("#department").val(info[6].textContent).material_select();
 	$("#status").val(info[13].textContent).material_select();
 
-	$("#birthday").pickadate('picker').set('select', info[8].textContent).trigger('change');
-	$("#entry-time").pickadate('picker').set('select', info[12].textContent).trigger('change');
+	$("#birthday").pickadate('picker')
+	.set('select', info[8].textContent).trigger('change');
+	$("#entry-time").pickadate('picker')
+	.set('select', info[12].textContent).trigger('change');
 
 	$("#search").modal('close');
 	$("#staff").modal('open');
 }
 
 function display() {
-	$.post(
-		'./assets/API/api.cgi',
-		JSON.stringify({"destination": 3, "operation": 1}),
+	$.get(
+		'staff/all',
 		function(response) {
 			$("#display").html('');
-			$("#ID").attr("max", response.length - 1);
-			$.each(response, function(i, staff) {
+			$("#ID").attr("max", response.data.length - 1);
+			$.each(response.data, function(i, staff) {
 				$("#display").append(
-					'<tr id="ID' + i + '">' +
-						'<td>' + i + '</td>' +
+					'<tr id="ID' + staff.id + '">' +
+						'<td>' + staff.id + '</td>' +
 						'<td>' + staff.jobNo + '</td>' +
 						'<td>' + staff.name + '</td>' +
 						'<td>' + staff.gender + '</td>' +
