@@ -23,8 +23,21 @@ class InventoryController extends Controller
     {
         $db = new Db;
         $db->insert(
+            "inventory",
+            $request->all()
+        );
+
+        return response()->json([
+            'code' => 0
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $db = new Db;
+        $db->update(
         	"inventory",
-        	$request->all()
+            $id, $request->all()
         );
 
         return response()->json([

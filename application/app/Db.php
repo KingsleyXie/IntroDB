@@ -64,7 +64,13 @@ class Db
 			"op_type" => 1
 		];
 
-		return json_decode($this->db_execute($operation));
+		$result = [];
+		foreach (json_decode($this->db_execute($operation)) as $value) {
+			$row = (array)$value->value;
+			$row["id"] = $value->key;
+			array_push($result, $row);
+		}
+		return $result;
 	}
 
 	public function insert($table, $data)
@@ -85,7 +91,7 @@ class Db
 			"db_name" => config('db.name'),
 			"tb_name" => $table,
 			"op_type" => 3,
-			"id" => $id,
+			"id" => intval($id),
 			"data" => $data
 		];
 
