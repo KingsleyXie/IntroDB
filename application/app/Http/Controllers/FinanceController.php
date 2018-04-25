@@ -22,10 +22,16 @@ class FinanceController extends Controller
     public function add(Request $request)
     {
         $db = new Db;
-        $db->insert(
-            "finance",
-            $request->all()
-        );
+        $db->insert("finance", [
+            "name" => $request->financeName,
+            "income" => $request->income,
+            "expenditure" => $request->expenditure,
+            "date" => [
+                "year" => date('Y'),
+                "month" => date('m'),
+                "day" => date('d')
+            ]
+        ]);
 
         return response()->json([
             'code' => 0

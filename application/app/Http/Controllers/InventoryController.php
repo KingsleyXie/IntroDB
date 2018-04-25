@@ -34,8 +34,8 @@ class InventoryController extends Controller
             "inventoryQuantity" => $request->inventoryQuantity,
             "threshold" => $request->threshold,
             "expiredTime" => $request->expiredTime,
-            "importTime" => $request->time,
-            "updateTime" => $request->time
+            "importTime" => date('Y-m-d'),
+            "updateTime" => date('Y-m-d')
         ];
 
         $db->insert("inventory", $data);
@@ -58,11 +58,11 @@ class InventoryController extends Controller
         $supplier = $suppliers[$request->supplierID];
 
         array_push($supplier["transactions"], [
-            "transactionTime" => $request->time,
+            "transactionTime" => date('Y-m-d'),
             "itemID" => $db->getCount("inventory"),
             "itemName" => $request->name,
             "itemAmount" => $request->inventoryQuantity,
-            "itemPrice" => $request->price,
+            "itemPrice" => $request->price
         ]);
 
         $db->update("supplier", $request->supplierID, $supplier);
@@ -88,7 +88,7 @@ class InventoryController extends Controller
         $item["inventoryQuantity"] = $request->inventoryQuantity;
         $item["threshold"] = $request->threshold;
         $item["expiredTime"] = $request->expiredTime;
-        $item["updateTime"] = $request->time;
+        $item["updateTime"] = date('Y-m-d');
 
         $db->update("inventory", $id, $item);
 
@@ -110,7 +110,7 @@ class InventoryController extends Controller
         $supplier = $suppliers[$request->supplierID];
 
         array_push($supplier["transactions"], [
-            "transactionTime" => $request->time,
+            "transactionTime" => date('Y-m-d'),
             "itemID" => $db->getCount("inventory"),
             "itemName" => $request->name,
             "itemAmount" => $request->inventoryQuantity,

@@ -22,10 +22,21 @@ class StaffController extends Controller
     public function add(Request $request)
     {
         $db = new Db;
-        $db->insert(
-            "staff",
-            $request->all()
-        );
+        $db->insert("staff", [
+            "jobNo" => $request->jobNo,
+            "name" => $request->name,
+            "gender" => $request->gender,
+            "nation" => $request->nation,
+            "nativePlace" => $request->nativePlace,
+            "department" => $request->department,
+            "postion" => $request->postion,
+            "birthday" => $request->birthday,
+            "contact" => $request->contact,
+            "address" => $request->address,
+            "salary" => $request->salary,
+            "entryTime" => $request->entryTime,
+            "status" => $request->status
+        ]);
 
         return response()->json([
             'code' => 0
@@ -35,10 +46,21 @@ class StaffController extends Controller
     public function update(Request $request, $id)
     {
         $db = new Db;
-        $db->update(
-            "staff",
-            $id, $request->all()
-        );
+        $db->update("staff", $id, [
+            "jobNo" => $request->jobNo,
+            "name" => $request->name,
+            "gender" => $request->gender,
+            "nation" => $request->nation,
+            "nativePlace" => $request->nativePlace,
+            "department" => $request->department,
+            "postion" => $request->postion,
+            "birthday" => $request->birthday,
+            "contact" => $request->contact,
+            "address" => $request->address,
+            "salary" => $request->salary,
+            "entryTime" => $request->entryTime,
+            "status" => $request->status
+        ]);
 
         return response()->json([
             'code' => 0
