@@ -48,6 +48,12 @@ Route::get(
 	'InitializeDB@index'
 );
 
+// Inventory API
+Route::post(
+	'/api/inventory',
+	'APIController@index'
+);
+
 // Sales Input Limits
 Route::get(
 	'/limits',

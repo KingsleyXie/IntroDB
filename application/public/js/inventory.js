@@ -48,9 +48,10 @@ $(document).ready(function() {
 function getDataFromAPI() {
 	$("#progress").show();
 	$.post(
-		'./assets/API/inventoryAPI.php',
+		'api/inventory',
 		'barcode=' + $("#barcode").val(),
 		function(response) {
+			response = JSON.parse(response);
 			if (response.status == 0) {
 				$("#brand").val(response.result.brand);
 				$("#name").val(response.result.name);
