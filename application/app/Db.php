@@ -65,10 +65,13 @@ class Db
 		];
 
 		$result = [];
-		foreach (json_decode($this->db_execute($operation)) as $value) {
-			$row = (array)$value->value;
-			$row["id"] = $value->key;
-			array_push($result, $row);
+		$dataset = $this->db_execute($operation);
+		if ($dataset != 'null') {
+			foreach (json_decode($dataset) as $value) {
+				$row = (array)$value->value;
+				$row["id"] = $value->key;
+				array_push($result, $row);
+			}
 		}
 		return $result;
 	}

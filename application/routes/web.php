@@ -32,6 +32,6 @@ Route::post('/staff/update/{id}', 'StaffController@update');
 Route::get('/finance/all', 'FinanceController@index');
 Route::post('/finance/add', 'FinanceController@add');
 
-Route::get('/report/finance/all', 'ReportController@finance');
-Route::get('/report/supplier/all', 'ReportController@suppliers');
-Route::get('/report/customer/all', 'ReportController@customers');
+Route::get('/report/finance', 'ReportController@finance');
+Route::get('/report/supplier', 'ReportController@supplier');
+Route::get('/report/customer', 'ReportController@customer');
