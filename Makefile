@@ -83,3 +83,7 @@ perf-test:
 itpf-test:
 	@$(C) -o performance/integrated performance/integrated.cpp
 	@./performance/integrated
+
+order-test:
+	@$(C) -o performance/order performance/order.cpp
+	@./performance/order

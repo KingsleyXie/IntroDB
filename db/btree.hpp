@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-#define DEFAULT_ORDER 100
+#define DEFAULT_ORDER 10000
 
 template <typename T>
 class BTreeNode
