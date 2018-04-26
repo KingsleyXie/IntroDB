@@ -16,15 +16,16 @@ void time_test(int size)
 	start = clock();
 
 	for (int i = 0; i < size; ++i)
-		btree.insert(i);
+		btree.insert(rand());
 
 	std::cout << ((double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
 }
 
 int main(int argc, char const *argv[])
 {
-	std::cout << "B-Tree<int> Performance Test\n";
+	std::cout << "B-Tree<random int> Performance Test\n";
 	std::cout << "Size\tTime";
+	srand((unsigned)time(NULL));
 
 	for (int i = START_NUM; i <= MAX_SCALE; i += INC_STEP)
 		time_test(i);

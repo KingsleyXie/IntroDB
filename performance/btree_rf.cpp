@@ -10,22 +10,22 @@ void time_test(int size)
 	std::cout << size;
 	std::cout << "\t";
 
-	json data = json::array();
-	Db db("db"); db.addTable("table");
+	BTree<int> btree;
 
 	clock_t start;
 	start = clock();
 
 	for (int i = 0; i < size; ++i)
-		db.insert("table", data);
+		btree.insert(float(rand()) / 1.13251);
 
 	std::cout << ((double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
 }
 
 int main(int argc, char const *argv[])
 {
-	std::cout << "Db Performance Test\n";
+	std::cout << "B-Tree<random float> Performance Test\n";
 	std::cout << "Size\tTime";
+	srand((unsigned)time(NULL));
 
 	for (int i = START_NUM; i <= MAX_SCALE; i += INC_STEP)
 		time_test(i);

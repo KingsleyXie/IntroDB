@@ -59,24 +59,24 @@ clean:
 
 
 perf-test:
-	@$(C) -o performance/btreei performance/btreei.cpp
-	@./performance/btreei
+	@$(C) -o performance/btree_oi performance/btree_oi.cpp
+	@./performance/btree_oi
 	@echo
 
-	@$(C) -o performance/btreeir performance/btreeir.cpp
-	@./performance/btreeir
+	@$(C) -o performance/btree_ri performance/btree_ri.cpp
+	@./performance/btree_ri
 	@echo
 
-	@$(C) -o performance/btreef performance/btreef.cpp
-	@./performance/btreef
+	@$(C) -o performance/btree_of performance/btree_of.cpp
+	@./performance/btree_of
 	@echo
 
-	@$(C) -o performance/btreefr performance/btreefr.cpp
-	@./performance/btreefr
+	@$(C) -o performance/btree_rf performance/btree_rf.cpp
+	@./performance/btree_rf
 	@echo
 
-	@$(C) -o performance/db performance/db.cpp
-	@./performance/db
+	@$(C) -o performance/kvn performance/kvn.cpp
+	@./performance/kvn
 	@echo
 
 # abbr. Integrated Performance Test

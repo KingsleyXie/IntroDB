@@ -16,14 +16,14 @@ void time_test(int size)
 	start = clock();
 
 	for (int i = 0; i < size; ++i)
-		btree.insert(float(i) / 1.13251);
+		btree.insert(i);
 
 	std::cout << ((double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
 }
 
 int main(int argc, char const *argv[])
 {
-	std::cout << "B-Tree<float> Performance Test\n";
+	std::cout << "B-Tree<ordered int> Performance Test\n";
 	std::cout << "Size\tTime";
 
 	for (int i = START_NUM; i <= MAX_SCALE; i += INC_STEP)
