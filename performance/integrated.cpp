@@ -26,12 +26,17 @@ private:
 		// Random Int
 		BTree<int> tree_ri;
 
+		int *arr_i = new int[size];
+		for (int i = 0; i < size; ++i)
+			arr_i[i] = rand();
+
 		start = clock();
 		for (int i = 0; i < size; ++i)
-			tree_ri.insert(rand());
+			tree_ri.insert(arr_i[i]);
 		std::cout << ((double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
 
 		std::cout << "\t";
+		delete arr_i;
 
 		// Ordered Float
 		BTree<float> tree_of;
@@ -46,12 +51,17 @@ private:
 		// Random Float
 		BTree<float> tree_rf;
 
+		float *arr_f = new float[size];
+		for (int i = 0; i < size; ++i)
+			arr_f[i] = float(rand()) / 1.13251;
+
 		start = clock();
 		for (int i = 0; i < size; ++i)
-			tree_rf.insert(float(rand()) / 1.13251);
+			tree_rf.insert(arr_f[i]);
 		std::cout << ((double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
 
 		std::cout << "\t";
+		delete arr_f;
 
 		// KVNode
 		Db kvn("db");

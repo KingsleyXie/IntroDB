@@ -12,13 +12,19 @@ void time_test(int size)
 
 	BTree<int> btree;
 
+	float *arr = new float[size];
+	for (int i = 0; i < size; ++i)
+		arr[i] = float(rand()) / 1.13251;
+
 	clock_t start;
 	start = clock();
 
 	for (int i = 0; i < size; ++i)
-		btree.insert(float(rand()) / 1.13251);
+		btree.insert(arr[i]);
 
 	std::cout << ((double)(clock() - start) / (CLOCKS_PER_SEC / 1000));
+
+	delete arr;
 }
 
 int main(int argc, char const *argv[])
