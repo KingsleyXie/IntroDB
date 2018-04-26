@@ -48,3 +48,38 @@ run-serialize-t:
 
 run-db-t:
 	@./tests/db
+
+
+
+clean:
+	@rm -rf *.exe
+	@rm -rf tests/*.exe
+	@rm -rf performance/*.exe
+
+
+
+perf-test:
+	@$(C) -o performance/btreei performance/btreei.cpp
+	@./performance/btreei
+	@echo
+
+	@$(C) -o performance/btreeir performance/btreeir.cpp
+	@./performance/btreeir
+	@echo
+
+	@$(C) -o performance/btreef performance/btreef.cpp
+	@./performance/btreef
+	@echo
+
+	@$(C) -o performance/btreefr performance/btreefr.cpp
+	@./performance/btreefr
+	@echo
+
+	@$(C) -o performance/db performance/db.cpp
+	@./performance/db
+	@echo
+
+# abbr. Integrated Performance Test
+itpf-test:
+	@$(C) -o performance/integrated performance/integrated.cpp
+	@./performance/integrated
