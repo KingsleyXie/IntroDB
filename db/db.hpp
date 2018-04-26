@@ -6,13 +6,22 @@ using json = nlohmann::json;
 
 class Db
 {
-public:
+private:
 	std::string name;
 	std::map<std::string, BTree<KVNode> > tables;
 
+	void restore_insert(std::string name, int id, json data)
+	{
+		if (!checkTable(name)) throw "Table not exists!\n";
+
+		KVNode node(id, data);
+		tables[name].insert(node);
+	}
+
+public:
 	Db(std::string name) { this->name = name; }
 
-	~Db() {}
+	~Db() { tables.clear(); }
 
 	void select(std::string name, json &result)
 	{
@@ -157,14 +166,5 @@ public:
 				restore_insert(table["name"], row["key"], row["value"]);
 			}
 		}
-	}
-
-private:
-	void restore_insert(std::string name, int id, json data)
-	{
-		if (!checkTable(name)) throw "Table not exists!\n";
-
-		KVNode node(id, data);
-		tables[name].insert(node);
 	}
 };

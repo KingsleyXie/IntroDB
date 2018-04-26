@@ -21,7 +21,14 @@ public:
 		keynum = 0;
 	}
 
-	~BTreeNode() {}
+	~BTreeNode()
+	{
+		for (int i = 0; i < 2 * order; ++i)
+			delete[] children[i];
+		delete[] children;
+
+		delete[] keys;
+	}
 
 	void insertNonFull(T key)
 	{
