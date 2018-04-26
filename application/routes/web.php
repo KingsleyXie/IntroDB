@@ -29,6 +29,9 @@ Route::get('/inventory', function() {
 Route::get('/report', function() {
 	return \File::get(public_path() . '/html/report.html');
 });
+Route::get('/maze', function() {
+	return \File::get(public_path() . '/html/maze.html');
+});
 Route::get('/sales', function() {
 	return \File::get(public_path() . '/html/sales.html');
 });
