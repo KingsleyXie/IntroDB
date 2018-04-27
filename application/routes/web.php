@@ -47,8 +47,14 @@ Route::get('/staffs', function() {
 
 // Database Initialization
 Route::get(
-	'/init',
-	'InitializeDB@index'
+	'/dbgen/init',
+	'DBController@init'
+);
+
+// Generate Database Sample Data
+Route::get(
+	'/dbgen/sample',
+	'DBController@sample'
 );
 
 // Inventory API
